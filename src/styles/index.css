@@ -8,4 +8,14 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: white;
+}
+
+.container {
+  margin: 80px auto 0 auto;
+  max-width: 1000px;
+}
+
+a {
+  text-decoration: none;
 }
