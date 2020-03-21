@@ -5,10 +5,13 @@ import {Content} from './components/layout/Content'
 
 function App() {
   return (
-    <div className="App">
+    <main
+      data-testid="app"
+      className="App"
+    >
       <Header />
       <Content />
-    </div>
+    </main>
   );
 }
 
