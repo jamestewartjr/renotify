@@ -6,7 +6,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-import {FaToggleOn, FaListUl, FaPlus} from 'react-icons/fa'
+import {FaListUl} from 'react-icons/fa'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -24,23 +24,21 @@ export const Header = () => {
   const classes = useStyles();
 
   return (
-    <header className={classes.root} data-testid="header">
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <FaListUl className="logo"/>
-          </IconButton>
-          <Typography variant="h6" className={classes.title}>
-            Notices
-          </Typography>
-          <Button color="inherit">Login</Button>
-          {/* <ul>
-            <li data-testid="add-task-action" className="settings__add"><FaPlus/></li>
-            <li data-testid="dark-mode-action" className="settings__darkmode"><FaToggleOn/></li>
-          </ul> */}
-        </Toolbar>
-      </AppBar>
-    </header>
+    <AppBar position="static">
+      <Toolbar>
+        <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+          <FaListUl className="logo"/>
+        </IconButton>
+        <Typography variant="h6" className={classes.title}>
+          Notices
+        </Typography>
+        <Button color="inherit">Login</Button>
+        {/* <ul>
+          <li data-testid="add-task-action" className="settings__add"><FaPlus/></li>
+          <li data-testid="dark-mode-action" className="settings__darkmode"><FaToggleOn/></li>
+        </ul> */}
+      </Toolbar>
+    </AppBar>
   );
 }
 

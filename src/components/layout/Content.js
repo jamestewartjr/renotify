@@ -6,7 +6,7 @@ import { Notices } from '../Notices';
 export const Content = () => {
   return (
     <React.Fragment>
-      <Container fluid>
+      <Container>
         <Typography component="div" />
         <Notices />
       </Container>

@@ -22,13 +22,11 @@ export const Notices = () => {
     <div className="notices" data-testid="notices">
       <ul className="notices__list">
         {notices.map( notice => (
-          <>
-            <li key={`${notice.id}`}>
+          <li key={`${notice.id}`}>
             <h3 data-testid="source-name">{notice.sourceName}</h3>
             {notice.name} from {notice.sender}
             <Chip label={notice.receivedTime}/>
-            </li>
-          </>
+          </li>
         ))}
       </ul>
     </div>
