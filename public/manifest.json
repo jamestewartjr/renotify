@@ -1,6 +1,23 @@
 {
   "short_name": "Renotify",
   "name": "Renotify",
+  "icons": [
+    {
+      "src": "reminders_16px.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "reminders_128px.png",
+      "type": "image/png",
+      "sizes": "128x128"
+    },
+    {
+      "src": "reminders_512px.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
   "description": "Renotify yourself of past notifications.",
   "start_url": ".",
   "display": "standalone",
