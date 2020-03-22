@@ -15,11 +15,17 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "int:test": "$(npm bin)/cypress run",
+    "test": "cross-env CI=true react-scripts test --env=jsdom",
+    "test:coverage": "react-scripts test --coverage --watchAll",
+    "test:int": "$(npm bin)/cypress run",
     "lint": "eslint src/**/*.js",
-    "test:coverage": "react-scripts test --coverage --watchAll"
+    "lint:fix": "eslint src/**/*.js --fix"
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "npm run lint && npm test && npm run test:int"
+    }
   },
   "jest": {
     "collectCoverageFrom": [
@@ -55,7 +61,11 @@
     ]
   },
   "devDependencies": {
+    "cross-env": "^7.0.2",
+    "cypress": "^4.2.0",
+    "eslint-plugin-cypress": "^2.10.3",
     "eslint-plugin-jsx-a11y": "^6.2.3",
+    "husky": "^4.2.3",
     "react-axe": "^3.4.1"
   }
 }
