@@ -18,7 +18,7 @@
     "eject": "react-scripts eject",
     "test": "cross-env CI=true react-scripts test --env=jsdom",
     "test:coverage": "react-scripts test --coverage --watchAll",
-    "test:int": "$(npm bin)/cypress run",
+    "test:ee": "$(npm bin)/cypress run",
     "lint": "eslint src/**/*.js",
     "lint:fix": "eslint src/**/*.js --fix"
   },
