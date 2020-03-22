@@ -5,10 +5,7 @@ import {Content} from './components/layout/Content'
 
 function App() {
   return (
-    <main
-      data-testid="app"
-      className="App"
-    >
+    <main data-testid="app" className="App">
       <Header />
       <Content />
     </main>
