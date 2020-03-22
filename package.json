@@ -17,7 +17,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "test:coverage": "react-scripts test --coverage --watchAll"  
+    "int:test": "$(npm bin)/cypress run",
+    "lint": "eslint src/**/*.js",
+    "test:coverage": "react-scripts test --coverage --watchAll"
   },
   "jest": {
     "collectCoverageFrom": [
@@ -38,12 +40,6 @@
     "coverageReporters": [
       "html",
       "text"
-    ]
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "plugin:jsx-a11y/recommended"
     ]
   },
   "browserslist": {
