@@ -10,14 +10,35 @@ admin.initializeApp({
 const db = admin.database();
 
 const typeDefs  = graphql`
+  type Notices{
+    id: ID
+    name: String
+    sender: String
+    sourceName: String
+    receivedTime: String
+  
+  }
   type Query{
-    task: String
+    fetchAllNotices: [Notices]
   }
 `
 
 const resolvers = {
   Query: {
-    task: () => "Hello World"
+    async fetchAllNotices() {
+      let ref = db.ref("notice");
+      try{
+        const notices = await ref.once("value")
+          .then(snapshot => snapshot.val()) 
+          .then(val => Object.keys(val)
+            .map(key => val[key]))
+        console.log('notices: ', notices)
+        return notices;
+      }
+      catch(error){
+        throw new Error(error)
+      }
+    }
   }
 }
 
@@ -27,8 +48,3 @@ server.listen({port:3100})
   .then(response => {
     console.info(`Server running at ${response.url}`)
   })
-
-let ref = db.ref("/notice");
-ref.once("value", function(snapshot) {
-  console.log(snapshot.val());
-});
