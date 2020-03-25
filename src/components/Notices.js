@@ -1,7 +1,7 @@
 import React from 'react';
 import Chip from '@material-ui/core/Chip';
 import gql from 'graphql-tag';
-import {useQuery} from '@apollo/react-hooks';
+import {useQuery} from 'react-apollo';
 
 export const Notices = () => {
   const {data} = useQuery(FETCH_NOTICES);
