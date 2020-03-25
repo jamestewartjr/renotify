@@ -1,0 +1,31 @@
+{
+  "notices": 
+  [{
+    "id": 1,
+    "name": "Do this and do that",
+    "user": "waitthisreal@gmail.com",
+    "platformId": "google",
+    "createdAt": "5:23 Tuesday, March 24, 2020"
+  },
+  {
+    "id": 2,
+    "name": "Do it all the way home",
+    "user": "afakeemail@gmail.com",
+    "platformId": "enphuse",
+    "createdAt": "6:24 Tuesday, March 24, 2020"
+  },
+  {
+    "id": 3,
+    "name": "Do  and do ",
+    "user": "waitthisreal@gmail.com",
+    "platformId": "web",
+    "createdAt": "12:23 Tuesday, March 23, 2020"
+  },
+  {
+    "id": 4,
+    "name": "all the way ",
+    "user": "afakeemail@gmail.com",
+    "platformId": "enphuse",
+    "createdAt": "9:24 Tuesday, March 22, 2020"
+  }]
+}
