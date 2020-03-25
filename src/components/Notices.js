@@ -1,34 +1,37 @@
 import React from 'react';
 import Chip from '@material-ui/core/Chip';
+import gql from 'graphql-tag';
+import {useQuery} from '@apollo/react-hooks';
 
 export const Notices = () => {
-  const notices = [
-    {
-      id: 1,
-      name: "This is a notice",
-      sourceName: "email",
-      sender: "Frank@itjrecruiters.com",
-      receivedTime: "March 8th 2020 05:30am"
-    },
-    {
-      id: 2,
-      name: "Placeholder notice",
-      sourceName: "screenshot",
-      sender: "DuoLingo",
-      receivedTime: "March 18th 2020 10:30am"
-    }
-  ];
+  const {data} = useQuery(FETCH_NOTICES);
+  if(data) {
+    console.log('ql data: ', data.fetchAllNotices)
+  }
+
   return (
     <div className="notices" data-testid="notices">
       <ul className="notices__list">
-        {notices.map( notice => (
-          <li key={`${notice.id}`}>
-            <h3 data-testid="source-name">{notice.sourceName}</h3>
-            {notice.name} from {notice.sender}
-            <Chip label={notice.receivedTime}/>
+        {data && data.fetchAllNotices.map( notice => (
+          <li key={`${notice.name}`}>
+            <h3 data-testid="source-name">{notice.platformId}</h3>
+            {notice.name} from {notice.user}
+            <Chip label={notice.createdAt}/>
           </li>
         ))}
       </ul>
     </div>
   )
 }
+
+const FETCH_NOTICES = gql`
+  {
+    fetchAllNotices{
+      id
+      name
+      platformId
+      user
+      createdAt
+    }
+  }
+`
