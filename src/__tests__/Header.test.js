@@ -4,11 +4,11 @@ import {Header} from '../components/layout/Header';
 
 beforeEach(cleanup);
 
-// describe('<Header />', () => {
-//   describe('Success', () => {
-//     it('renders the header component', () => {
-//       const { queryByTestId } = render(<Header />);
-//       expect(queryByTestId('header')).toBeTruthy();
-//     });
-//   });
-// });
+describe('<Header />', () => {
+  describe('Success', () => {
+    it('renders the header component', () => {
+      const { queryByTestId } = render(<Header />);
+      expect(queryByTestId('header')).toBeTruthy();
+    });
+  });
+});
