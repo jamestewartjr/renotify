@@ -6,7 +6,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-import {FaListUl} from 'react-icons/fa'
+import {MdMenu} from 'react-icons/md'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -27,7 +27,7 @@ export const Header = () => {
     <AppBar position="static" data-testid="header">
       <Toolbar>
         <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-          <FaListUl className="logo"/>
+          <MdMenu className="logo"/>
         </IconButton>
         <Typography variant="h6" className={classes.title}>
           Notices
