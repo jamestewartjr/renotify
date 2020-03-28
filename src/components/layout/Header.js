@@ -39,15 +39,6 @@ export const Header = () => {
               onClick={toggleDrawer()}
               onKeyDown={toggleDrawer()}
             >
-              <Button
-                variant="contained"
-                color="secondary"
-                size="small"
-                className={classes.button}
-                startIcon={<MdMenu />}
-              >
-                New Notice
-              </Button>
               <List>
                 {['Notices', 'In 7 Days', 'Send email', 'Drafts'].map((text, index) => (
                   <ListItem button key={text}>
