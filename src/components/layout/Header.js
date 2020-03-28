@@ -7,6 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import {MdMenu} from 'react-icons/md'
 import { useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
+import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -14,16 +15,13 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 export const Header = () => {
   const classes = useTheme();
-
-  const [state, setState] = useState({
-    open: false,
-  });
+  const [toggle, setMenuToggle] = useState(false);
 
   const toggleDrawer = () => event => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
     }
-    setState({ ...state, open:true });
+    setMenuToggle(!toggle);
   };
 
   return (
@@ -34,15 +32,24 @@ export const Header = () => {
           onClick={toggleDrawer()} 
           aria-label="menu"
         >
-          <Drawer anchor="left" open={state.open} onClose={toggleDrawer()}>
+          <Drawer anchor="left" open={toggle} onClose={toggleDrawer()}>
             <div
               className={classes.list}
               role="presentation"
               onClick={toggleDrawer()}
               onKeyDown={toggleDrawer()}
             >
+              <Button
+                variant="contained"
+                color="secondary"
+                size="small"
+                className={classes.button}
+                startIcon={<MdMenu />}
+              >
+                New Notice
+              </Button>
               <List>
-                {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+                {['Notices', 'In 7 Days', 'Send email', 'Drafts'].map((text, index) => (
                   <ListItem button key={text}>
                     <ListItemIcon><MdMenu /></ListItemIcon>
                     <ListItemText primary={text} />
@@ -54,7 +61,7 @@ export const Header = () => {
           <MdMenu />
         </IconButton>
         <Typography variant="h6" className={classes.title}>
-          renotify
+          Renotify
         </Typography>
       </Toolbar>
     </AppBar>
