@@ -2,11 +2,10 @@ const app = require('express')();
 const {
   ApolloServer,
   AuthenticationError,
-} = require('apollo-server-express')
+} = require('apollo-server-express') 
 
 const typeDefs = require('./graphql/typeDefs');
 const resolvers = require('./graphql/resolvers');
-const {firebaseAuth} = require('./util/firebaseAuth');
 
 const PORT = 3100;
 
@@ -16,13 +15,14 @@ const PORT = 3100;
 //     console.info(`Server running at ${response.url}`)
 //   })
 
-
 const context = ({ request }) => {
+  console.log(request)
   try {
-    firebaseAuth(request)
+    const auth = request.headers.authorization || null;
+    return auth
   } catch (e) {
     throw new AuthenticationError(
-      'Authentication token is invalid, please log in',
+      'Authentication token is invalid, please log in'
     )
   }
 }
