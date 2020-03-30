@@ -10,22 +10,27 @@ module.exports = gql`
 
   }
   type User{
-    id: ID!
-    email: String!
-    token: String!
-    username: String!
-    createdAt: String!
+    id: ID
+    email: String
+    token: String
+    username: String
+    createdAt: String
   }
   input RegisterInput{
     username: String!
+    email: String!
     password: String!
     confirmPassword: String!
-    email: String!
   }
   type Query{
     fetchAllNotices: [Notices]
   }
+  type AuthPayload {
+  token: String
+  user: User
+}
   type Mutation {
-    register(registerInput: RegisterInput): User
+    register( username: String!, email: String!, password: String!,confirmPassword: String!): AuthPayload
+    login(email: String!, password: String!): AuthPayload
   }
 `
