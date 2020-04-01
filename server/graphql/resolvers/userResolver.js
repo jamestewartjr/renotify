@@ -54,9 +54,12 @@ const login = (_, args) => {
       return data.user.getIdToken();
     })
     .then(token => {
-      console.log('login token: ', token)
-      //let user = getRegisteredUser
-      return token
+      let userData = firebase.auth().currentUser;
+      let user = {
+        email: userData.email,
+        id: userData.uid
+      }
+      return {token, user}
     })
     .catch(error => {
       console.error('Error: ', error);
