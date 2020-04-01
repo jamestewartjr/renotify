@@ -24,11 +24,11 @@ module.exports = gql`
   }
   type Query{
     fetchAllNotices: [Notices]
-  }
+  }z
   type AuthPayload {
-  token: String
-  user: User
-}
+    token: String
+    user: User
+  }
   type Mutation {
     register( username: String!, email: String!, password: String!,confirmPassword: String!): AuthPayload
     login(email: String!, password: String!): AuthPayload

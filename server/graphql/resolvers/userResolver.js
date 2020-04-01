@@ -1,11 +1,11 @@
-const {admin, db} = require('../../util/admin') 
+const {db} = require('../../util/admin') 
 const firebase = require('firebase')
 const {AuthenticationError} = require('apollo-server-express')
 const firebaseConfig = require('../../config/serviceKey')
 firebase.initializeApp(firebaseConfig);
 
 const register = (_, args) => {
-  let tokenValue,userId;
+  let userId;
   const {username, email, password, confirmPassword} = args;
 
   return db.doc(`/users/${username}`).get()
@@ -27,7 +27,6 @@ const register = (_, args) => {
     })
     .then( (token) => {
       console.log('user token: ', token)
-      tokenValue = token;
       const userCredentials = {
         email: email,
         password: password,
