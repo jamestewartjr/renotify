@@ -1,27 +1,28 @@
 const {admin, db} = require('./admin');
+const {AuthenticationError} = require('apollo-server-express')
 
-exports.firebaseAuth = (request, response, next) => {
+exports.firebaseAuth = (context) => {
   let idToken;
-  if(request.headers.authorization && request.headers.authorization.startsWith('Bearer ')){
-    idToken = request.headers.authorization.split('Bearer ')[1];
+  if(context.request.headers.authorization && context.request.headers.authorization.startsWith('Bearer ')){
+    idToken = context.request.headers.authorization.split('Bearer ')[1];
   } else {
     console.error('No token found.')
-    return response.status(403).json({ error: 'Unauthorized'});
+    throw new AuthenticationError('Invalid token.');
   }
   admin.auth().verifyIdToken(idToken)
     .then(decodedToken => {
-      request.user = decodedToken;
+      context.request.user = decodedToken;
       return db.collection('users')
-        .where('userId', '==', request.user.uid)
+        .where('userId', '==', context.request.user.uid)
         .limit(1)
         .get();
     })
-    .then( data => {
-      request.user.userName = data.docs[0].data().userName;
-      return next();
-    })
+    // .then( data => {
+    //   request.user.userName = data.docs[0].data().userName;
+    //   return next();
+    // })
     .catch((error) => {
       console.error('verify token error', error)
-      return response.status(403).json({ error: error });
+      throw new AuthenticationError('verify token error');
     });
 };

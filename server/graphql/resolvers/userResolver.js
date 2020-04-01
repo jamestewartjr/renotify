@@ -36,6 +36,7 @@ const register = (_, args) => {
         userId
       };
       let cred = db.doc(`/users/${username}`).set(userCredentials)
+      console.log('user creds ', cred)
       return {token, cred}
     })
     .catch(error => {
