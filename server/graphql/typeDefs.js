@@ -1,7 +1,7 @@
 const {gql} = require('apollo-server-express');
 
 module.exports = gql`
-  type Notices{
+  type Notice{
     id: ID
     name: String
     user: String
@@ -21,7 +21,8 @@ module.exports = gql`
     confirmPassword: String!
   }
   type Query{
-    fetchAllNotices: [Notices]
+    fetchAllNotices: [Notice]
+    fetchNoticeById(noticeId: String!): Notice
   }
   type AuthPayload {
     token: String!
@@ -30,5 +31,7 @@ module.exports = gql`
   type Mutation {
     register(registerInput: RegisterInput): AuthPayload!
     login(email: String!, password: String!): AuthPayload!
+    createNotice(body: String!): Notice!
+    deleteNotice(noticeId: ID!): String
   }
 `
