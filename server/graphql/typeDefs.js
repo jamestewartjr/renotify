@@ -7,12 +7,10 @@ module.exports = gql`
     user: String
     platformId: String
     createdAt: String
-
   }
   type User{
     id: ID
     email: String
-    token: String
     username: String
     createdAt: String
   }
@@ -24,13 +22,13 @@ module.exports = gql`
   }
   type Query{
     fetchAllNotices: [Notices]
-  }z
+  }
   type AuthPayload {
     token: String!
     user: User!
   }
   type Mutation {
-    register( registerInput: RegisterInput): AuthPayload!
+    register(registerInput: RegisterInput): AuthPayload!
     login(email: String!, password: String!): AuthPayload!
   }
 `

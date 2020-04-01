@@ -6,8 +6,7 @@ firebase.initializeApp(firebaseConfig);
 
 const register = (_, args) => {
   let userId;
-  const {username, email, password, confirmPassword} = args;
-
+  const {registerInput:{username, email, password, confirmPassword}} = args;
   return db.doc(`/users/${username}`).get()
     .then(doc => {
       if(doc.exists){
@@ -26,7 +25,6 @@ const register = (_, args) => {
       return data.user.getIdToken();
     })
     .then( (token) => {
-      console.log('user token: ', token)
       const userCredentials = {
         email: email,
         password: password,
@@ -35,9 +33,8 @@ const register = (_, args) => {
         createdAt: new Date().toISOString(),
         userId
       };
-      let cred = db.doc(`/users/${username}`).set(userCredentials)
-      console.log('user creds ', cred)
-      return {token, cred}
+      db.doc(`/users/${userId}`).set(userCredentials)
+      return {token, user:userCredentials} 
     })
     .catch(error => {
       console.error('Error: ', error)
@@ -66,6 +63,10 @@ const login = (_, args) => {
       throw new AuthenticationError('Wrong credentials.');
     })
 };
+
+const logout = () =>{
+  return firebase.auth().signOut();
+}
 
 module.exports = {
   Mutation: {
