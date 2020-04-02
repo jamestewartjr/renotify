@@ -15,20 +15,19 @@ const PORT = 3100;
 //     console.info(`Server running at ${response.url}`)
 //   })
 
-const context = ({ request }) => {
-  console.log(request)
-  try {
-    const auth = request.headers.authorization || null;
-    return auth
-  } catch (e) {
-    throw new AuthenticationError(
-      'Authentication token is invalid, please log in'
-    )
-  }
-}
+// const context = ({ request }) => {
+//   try {
+//     const auth = request.headers.authorization || null;
+//     return auth
+//   } catch (e) {
+//     throw new AuthenticationError(
+//       'Authentication token is invalid, please log in'
+//     )
+//   }
+// }
 
-// const server = new ApolloServer({ typeDefs, resolvers, context })
-const server = new ApolloServer({ typeDefs, resolvers })
+const server = new ApolloServer({ typeDefs, resolvers, context: ({ req }) => ({ req }) })
+// const server = new ApolloServer({ typeDefs, resolvers })
 
 server.applyMiddleware({ app, path: "/", cors: true  })
 app.listen(PORT, () =>

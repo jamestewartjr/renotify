@@ -3,26 +3,23 @@ const {AuthenticationError} = require('apollo-server-express')
 
 exports.firebaseAuth = (context) => {
   let idToken;
-  if(context.request.headers.authorization && context.request.headers.authorization.startsWith('Bearer ')){
-    idToken = context.request.headers.authorization.split('Bearer ')[1];
+  if(context.req.headers.authorization && context.req.headers.authorization.startsWith('Bearer ')){
+    idToken = context.req.headers.authorization.split('Bearer ')[1];
+    return admin.auth().verifyIdToken(idToken)
+      .then(decodedToken => {
+        return db.collection('users')
+          .where('userId', '==', decodedToken.user_id)
+          .limit(1)
+          .get();
+      })
+      .then( data => {
+        return data.docs[0].data();
+      })
+      .catch((error) => {
+        console.error('Verify token error', error)
+        throw new AuthenticationError('Authentication token error');
+      });
   } else {
-    console.error('No token found.')
-    throw new AuthenticationError('Invalid token.');
+    throw new AuthenticationError('Authorization header needed.');
   }
-  admin.auth().verifyIdToken(idToken)
-    .then(decodedToken => {
-      context.request.user = decodedToken;
-      return db.collection('users')
-        .where('userId', '==', context.request.user.uid)
-        .limit(1)
-        .get();
-    })
-    // .then( data => {
-    //   request.user.userName = data.docs[0].data().userName;
-    //   return next();
-    // })
-    .catch((error) => {
-      console.error('verify token error', error)
-      throw new AuthenticationError('verify token error');
-    });
 };

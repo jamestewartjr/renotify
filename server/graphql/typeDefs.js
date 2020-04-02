@@ -31,7 +31,7 @@ module.exports = gql`
   type Mutation {
     register(registerInput: RegisterInput): AuthPayload!
     login(email: String!, password: String!): AuthPayload!
-    createNotice(body: String!): Notice!
+    createNotice(body: String!): Notice
     deleteNotice(noticeId: ID!): String
   }
 `
