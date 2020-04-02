@@ -1,5 +1,6 @@
 const {db} = require('../../util/admin') 
 const {firebaseAuth} = require('../../util/firebaseAuth')
+const {AuthenticationError} = require('apollo-server-express')
 
 const fetchAllNotices = async () => {
   const notices = await db
@@ -33,7 +34,7 @@ const fetchNoticeById = async (_, {noticeId}) => {
 }
 
 const createNotice = (_, {body}, context) => {
-  return firebaseAuth(context)
+  firebaseAuth(context)
     .then( user => {   
       const newNotice = {
         name: body,
@@ -58,14 +59,27 @@ const createNotice = (_, {body}, context) => {
     .catch( error => {
       throw new Error('Something went wrong. Try again')
     })
-
-
-
-
 }
 
 const deleteNotice = async (_, {noticeId}, context) => {
-
+  const document =  db.doc(`/notices/${noticeId}`);
+  const user = await firebaseAuth(context);
+  try{
+    let doc = await document.get()
+    if (!doc.exists) {
+      throw new Error ('Notice not found');
+    }
+    if (doc.data().user !== user.username) {
+      throw new AuthenticationError('Unauthorized');
+    } else {
+      await document.delete();
+      return 'Notice deleted successfully';
+    }
+  }
+  catch(error) {
+    console.error(error);
+    throw new Error(error.code);
+  };
 }
 
 module.exports = {
