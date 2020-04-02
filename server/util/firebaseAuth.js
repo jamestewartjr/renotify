@@ -17,7 +17,7 @@ exports.firebaseAuth = (context) => {
       })
       .catch((error) => {
         console.error('Verify token error', error)
-        throw new AuthenticationError('Authentication token error');
+        throw new AuthenticationError('Authentication token error.');
       });
   } else {
     throw new AuthenticationError('Authorization header needed.');
