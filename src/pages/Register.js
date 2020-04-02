@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -10,6 +10,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {FaUserLock} from 'react-icons/fa';
 import {Link} from 'react-router-dom';
+import {useMutation} from '@apollo/react-hooks';
+import gql from 'graphql-tag';
 
 const Copyright = () => {
   return (
@@ -47,6 +49,26 @@ const useStyles = makeStyles((theme) => ({
 const Register = () => {
   const classes = useStyles();
 
+  const [values, setValues] = useState({
+    username: '', email: '', password:'', confirmPassword:''
+  })
+
+  const onChange = (event) => {
+    setValues({ ...values, [event.target.name]: event.target.value})
+  }
+
+  const [addUser, {loading}] = useMutation(REGISTER_USER, {
+    update(proxy, result){
+      console.log(result)
+    },
+    variables: values
+  })
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+    addUser();
+  }
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -57,7 +79,7 @@ const Register = () => {
         <Typography component="h1" variant="h5">
           Welcome
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={loading ? 'loading' : classes.form} onSubmit={onSubmit} noValidate>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
@@ -68,6 +90,7 @@ const Register = () => {
                 fullWidth
                 id="userName"
                 label="Username"
+                onChange={onChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -79,6 +102,7 @@ const Register = () => {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                onChange={onChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -91,6 +115,7 @@ const Register = () => {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={onChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -103,6 +128,7 @@ const Register = () => {
                 type="password"
                 id="confirmPassword"
                 autoComplete="current-confirm-password"
+                onChange={onChange}
               />
             </Grid>
           </Grid>
@@ -132,3 +158,23 @@ const Register = () => {
 }
 
 export default Register;
+
+const REGISTER_USER = gql`
+  mutation register(
+    $username: String!
+    $email: String!
+    $password: String!
+    $confirmPassword: String!
+  ) {
+    register(
+      registerInput: {
+        username: $username
+        email: $email
+        password: $password
+        confirmPassword: $confirmPassword
+      }
+    ){
+     token user{ id email username createdAt }
+    }
+  }
+`
