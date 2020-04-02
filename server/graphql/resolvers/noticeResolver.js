@@ -47,7 +47,7 @@ const createNotice = (_, {body}, context) => {
           //TODO: need to update CreateNotice to return new notice information
           const notice = newNotice
           notice.noticeId = doc.id
-          console.log(notice)
+          // console.log(notice)
           return notice
         })
         .catch(error => {
@@ -64,7 +64,7 @@ const createNotice = (_, {body}, context) => {
 
 }
 
-const deleteNotice = (_, noticeId) => {
+const deleteNotice = async (_, {noticeId}, context) => {
 
 }
 
