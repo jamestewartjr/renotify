@@ -33,32 +33,24 @@ const fetchNoticeById = async (_, {noticeId}) => {
   }
 }
 
-const createNotice = (_, {body}, context) => {
-  firebaseAuth(context)
-    .then( user => {   
-      const newNotice = {
-        name: body,
-        user: user.username,
-        platformId: 'unknown',
-        createdAt: new Date().toISOString(),
-      };
-      db.collection('notices')
-        .add(newNotice)
-        .then(doc => {
-          //TODO: need to update CreateNotice to return new notice information
-          const notice = newNotice
-          notice.noticeId = doc.id
-          // console.log(notice)
-          return notice
-        })
-        .catch(error => {
-          console.error('Create notice error: ',error)
-          throw new Error ('Something went wrong. Please create a new notice')
-        })
-    })
-    .catch( error => {
-      throw new Error('Something went wrong. Try again')
-    })
+const createNotice = async (_, {body}, context) => {
+  try{
+    let user = await firebaseAuth(context)
+    const newNotice = {
+      name: body,
+      user: user.username,
+      platformId: 'unknown',
+      createdAt: new Date().toISOString(),
+    };
+    let doc = await db.collection('notices').add(newNotice)
+    const notice = newNotice
+    notice.id = doc.id
+    return notice
+  }
+  catch(error)  {
+    console.error('Create notice error: ',error)
+    throw new Error ('Something went wrong. Please create a new notice')
+  }
 }
 
 const deleteNotice = async (_, {noticeId}, context) => {
