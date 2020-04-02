@@ -7,11 +7,11 @@ import IconButton from '@material-ui/core/IconButton';
 import {MdMenu} from 'react-icons/md'
 import { useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
-import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import {Link} from 'react-router-dom'
 
 export const Header = () => {
   const classes = useTheme();
@@ -23,6 +23,13 @@ export const Header = () => {
     }
     setMenuToggle(!toggle);
   };
+
+  const NavItems = [
+    { text: 'Home', to:'/' },
+    { text: 'Login', to:'/login' },
+    { text: 'Register', to:'/register' },
+    { text: 'Notices', to:'/notices' }
+  ]
 
   return (
     <AppBar position="static" data-testid="header" color="primary" >
@@ -40,10 +47,12 @@ export const Header = () => {
               onKeyDown={toggleDrawer()}
             >
               <List>
-                {['Notices', 'In 7 Days', 'Send email', 'Drafts'].map((text, index) => (
-                  <ListItem button key={text}>
+                {NavItems.map((item, index) => (
+                  <ListItem button key={item.text}>
                     <ListItemIcon><MdMenu /></ListItemIcon>
-                    <ListItemText primary={text} />
+                    <Link to={item.to}>
+                      <ListItemText primary={item.text} />
+                    </Link>
                   </ListItem>
                 ))}
               </List>

@@ -1,13 +1,19 @@
 import React from 'react';
 import './styles/index.css';
 import {Header} from './components/layout/Header'
-import {Content} from './components/layout/Content'
 import ApolloClient from 'apollo-client';
 import {InMemoryCache} from 'apollo-cache-inmemory';
 import {createHttpLink} from 'apollo-link-http';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import themeObj from './styles/theme.json';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
+import Home from './pages/Home'
+import Login from './pages/Login'
+import Register from './pages/Register'
+import Notices from './pages/Notices'
+import Container from '@material-ui/core/Container';
+
 
 const httpLink = createHttpLink({
   uri: 'http://localhost:3100/'
@@ -24,14 +30,19 @@ const theme = createMuiTheme(themeObj);
 
 function App() {
   return (
-    <ApolloProvider client={client}>
-      <ThemeProvider theme={theme}>
-        <main data-testid="app" className="App">
+    <Router>
+      <ApolloProvider client={client}>
+        <ThemeProvider theme={theme}>
           <Header />
-          <Content />
-        </main>
-      </ThemeProvider>
-    </ApolloProvider>
+          <Container data-testid="app" className="App">
+            <Route exact path='/' component={Home}/>
+            <Route exact path='/login' component={Login}/>
+            <Route exact path='/register' component={Register}/>
+            <Route exact path='/notices' component={Notices}/>
+          </Container>
+        </ThemeProvider>
+      </ApolloProvider>
+    </Router>
   );
 }
 

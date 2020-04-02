@@ -3,7 +3,7 @@ import Chip from '@material-ui/core/Chip';
 import gql from 'graphql-tag';
 import {useQuery} from '@apollo/react-hooks';
 
-export const Notices = () => {
+export const NoticesList = () => {
   const {data} = useQuery(FETCH_NOTICES);
 
   return (
