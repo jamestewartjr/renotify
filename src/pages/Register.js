@@ -11,8 +11,7 @@ import Container from '@material-ui/core/Container';
 import {FaUserLock} from 'react-icons/fa';
 import {Link} from 'react-router-dom';
 
-
-function Copyright() {
+const Copyright = () => {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
@@ -45,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignUp() {
+const Register = () => {
   const classes = useStyles();
 
   return (
@@ -131,3 +130,5 @@ export default function SignUp() {
     </Container>
   );
 }
+
+export default Register;
