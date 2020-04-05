@@ -33,7 +33,7 @@ const register = (_, args) => {
         createdAt: new Date().toISOString(),
         userId
       };
-      db.doc(`/users/${userId}`).set(userCredentials)
+      db.collection('users').doc(userId).set(userCredentials)
       return {token, user:userCredentials} 
     })
     .catch(error => {
@@ -41,7 +41,7 @@ const register = (_, args) => {
       if(error.code === 'auth/email-already-in-use'){
         throw new AuthenticationError('Email is already in use.')
       }else {
-        throw new AuthenticationError("Something went wrong.")
+        throw new AuthenticationError(`Something went wrong: ${error}`)
       }
     });
 };
@@ -67,9 +67,9 @@ const login = (_, args) => {
     })
 };
 
-const logout = () =>{
-  return firebase.auth().signOut();
-}
+// const logout = () =>{
+//   return firebase.auth().signOut();
+// }
 
 module.exports = {
   Mutation: {

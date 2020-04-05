@@ -12,6 +12,7 @@ import {FaUserLock} from 'react-icons/fa';
 import {Link} from 'react-router-dom';
 import {useMutation} from '@apollo/react-hooks';
 import gql from 'graphql-tag';
+import FormHelperText from '@material-ui/core/FormHelperText';
 
 const Copyright = () => {
   return (
@@ -46,9 +47,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Register = () => {
+const Register = (props) => {
   const classes = useStyles();
 
+  const [errors, setErrors] = useState({});
   const [values, setValues] = useState({
     username: '', email: '', password:'', confirmPassword:''
   })
@@ -59,11 +61,13 @@ const Register = () => {
 
   const [addUser, {loading}] = useMutation(REGISTER_USER, {
     update(proxy, result){
-      console.log(result)
+      props.history.push('/notices');
+    },
+    onError({ graphQLErrors, networkError }) {
+      setErrors(graphQLErrors[0].message|| networkError);
     },
     variables: values
   })
-
   const onSubmit = (event) => {
     event.preventDefault();
     addUser();
@@ -88,8 +92,9 @@ const Register = () => {
                 variant="outlined"
                 required
                 fullWidth
-                id="userName"
+                id="username"
                 label="Username"
+                // error={errors.username ? true : false}
                 onChange={onChange}
               />
             </Grid>
@@ -102,6 +107,7 @@ const Register = () => {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                // error={errors.email ? true : false}
                 onChange={onChange}
               />
             </Grid>
@@ -115,6 +121,7 @@ const Register = () => {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                // error={errors.password ? true : false}
                 onChange={onChange}
               />
             </Grid>
@@ -128,6 +135,7 @@ const Register = () => {
                 type="password"
                 id="confirmPassword"
                 autoComplete="current-confirm-password"
+                // error={errors.confirmPassword ? true : false}
                 onChange={onChange}
               />
             </Grid>
@@ -141,6 +149,7 @@ const Register = () => {
           >
             Sign Up
           </Button>
+          <FormHelperText error={errors.length > 0 ? true : false}>{Object.values(errors)}</FormHelperText>
           <Grid container justify="flex-end">
             <Grid item>
               <Link to="/login" variant="body2">
