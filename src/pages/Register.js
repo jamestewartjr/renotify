@@ -13,6 +13,7 @@ import {Link} from 'react-router-dom';
 import {useMutation} from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import FormHelperText from '@material-ui/core/FormHelperText';
+import {useForm} from '../utils/hooks'
 
 const Copyright = () => {
   return (
@@ -50,28 +51,27 @@ const useStyles = makeStyles((theme) => ({
 const Register = (props) => {
   const classes = useStyles();
 
-  const [errors, setErrors] = useState({});
-  const [values, setValues] = useState({
-    username: '', email: '', password:'', confirmPassword:''
-  })
+  const [errors, setErrors] = useState({});  
 
-  const onChange = (event) => {
-    setValues({ ...values, [event.target.name]: event.target.value})
-  }
+  const { onChange, onSubmit, values} = useForm(registerUser, {
+    username: '', email: '', password:'', confirmPassword:''
+  });
 
   const [addUser, {loading}] = useMutation(REGISTER_USER, {
     update(proxy, result){
       props.history.push('/notices');
     },
     onError({ graphQLErrors, networkError }) {
-      setErrors(graphQLErrors[0].message|| networkError);
+      if(errors || graphQLErrors[0].message) {
+        console.log('Register errors', errors)
+        console.log('Register grapherror', errors.graphQLErrors[0].message ? errors.graphQLErrors[0].message : null)
+      }
+      setErrors(graphQLErrors[0].message || networkError);
     },
     variables: values
   })
-  const onSubmit = (event) => {
-    event.preventDefault();
-    addUser();
-  }
+
+  function registerUser(){ addUser()}
 
   return (
     <Container component="main" maxWidth="xs">

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -9,7 +9,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {FaUserLock} from 'react-icons/fa';
 import {Link} from 'react-router-dom';
-
+import FormHelperText from '@material-ui/core/FormHelperText';
+import {useForm} from '../utils/hooks'
+import {useMutation} from '@apollo/react-hooks';
+import gql from 'graphql-tag';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -31,8 +34,32 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Login = () => {
+const Login = (props) => {
   const classes = useStyles();
+
+  const [errors, setErrors] = useState({});  
+
+  const { onChange, onSubmit, values} = useForm(signinUser, {
+    email: '', password:''
+  });
+
+  const [loginUser, {loading}] = useMutation(LOGIN_USER, {
+    update(proxy, result){
+      props.history.push('/notices');
+    },
+    onError(errors) {
+      if(errors.graphQLErrors[0]){
+        setErrors(errors.graphQLErrors[0].message);
+      }
+      if(errors.networkError){
+        setErrors(errors.networkError);
+      }
+    },
+    variables: values
+  })
+
+  function signinUser(){ loginUser()}
+
 
   return (
     <Container component="main" maxWidth="xs">
@@ -44,7 +71,7 @@ const Login = () => {
         <Typography component="h1" variant="h5">
           Welcome Back!
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={loading ? 'loading' : classes.form} onSubmit={onSubmit} noValidate>
           <TextField
             variant="outlined"
             margin="normal"
@@ -54,6 +81,7 @@ const Login = () => {
             label="Email Address"
             name="email"
             autoComplete="email"
+            onChange={onChange}
           />
           <TextField
             variant="outlined"
@@ -65,11 +93,13 @@ const Login = () => {
             type="password"
             id="password"
             autoComplete="current-password"
+            onChange={onChange}
           />
           {/* <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           /> */}
+          <FormHelperText error={errors.length > 0 ? true : false}>{Object.values(errors)}</FormHelperText>
           <Button
             type="submit"
             fullWidth
@@ -98,3 +128,16 @@ const Login = () => {
 }
 
 export default Login;
+
+
+const LOGIN_USER = gql`
+  mutation login(
+    $email: String!
+    $password: String!
+  ) {
+    login( email: $emai  password: $password  )
+    {
+     token user{ id email username createdAt }
+    }
+  }
+`
