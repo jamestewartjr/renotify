@@ -104,7 +104,7 @@ export default function Pricing() {
       <CssBaseline />
       {/* Hero unit */}
       <Container maxWidth="" component="main" className={classes.hero}>
-        <Typography component="h1" variant="h2" align="center" color="#fff">
+        <Typography component="h1" variant="h2" align="center">
           Tired of Notifications?
         </Typography>
         <Typography variant="h5" align="center" color="textSecondary" component="p">
