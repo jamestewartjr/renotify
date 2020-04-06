@@ -160,7 +160,7 @@
   "spacing": 8 ,
   "palette": {
     "tonalOffset": 0.2,
-    "background": { "paper": "#fff", "default": "#fafafa" },
+    "background": { "paper": "#fff", "default": "#fafafa", "primary":"#55b597" },
     "contrastThreshold": 3,
     "grey": {
       "50": "#fafafa",
