@@ -79,10 +79,11 @@ export const Header = () => {
           Renotify
         </Typography>
         {user && <Button 
+          className="logout_button"
           variant='text' 
           color="inherit"
           disableFocusRipple
-          href='/'
+          onClick={logout}
         >
           Logout
         </Button>}

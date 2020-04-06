@@ -14,6 +14,7 @@ import Register from './pages/Register'
 import Notices from './pages/Notices'
 import Container from '@material-ui/core/Container';
 import {AuthProvider } from './context/auth'
+import AuthRoute from './components/AuthRoute'
 
 const httpLink = createHttpLink({
   uri: 'http://localhost:3100/'
@@ -37,8 +38,8 @@ function App() {
             <Header />
             <Container data-testid="app" className="App">
               <Route exact path='/' component={Home}/>
-              <Route exact path='/login' component={Login}/>
-              <Route exact path='/register' component={Register}/>
+              <AuthRoute exact path='/login' component={Login}/>
+              <AuthRoute exact path='/register' component={Register}/>
               <Route exact path='/notices' component={Notices}/>
             </Container>
           </ThemeProvider>
