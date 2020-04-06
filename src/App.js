@@ -15,13 +15,21 @@ import Notices from './pages/Notices'
 import Container from '@material-ui/core/Container';
 import {AuthProvider } from './context/auth'
 import AuthRoute from './components/AuthRoute'
+import {setContext} from 'apollo-link-context'
 
 const httpLink = createHttpLink({
   uri: 'http://localhost:3100/'
 });
 
+const authLink = setContext( () => {
+  const token = localStorage.getItem('JWTToken')
+  return ({
+    headers: { Authorization: token ? `Bearer ${token}` : null }
+  })
+})
+
 const client = new ApolloClient({
-  link: httpLink,
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache({
     dataIdFromObject: o => (o.id ? `${o.__typename}-${o.id}`: null),
   })
