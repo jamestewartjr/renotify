@@ -1,42 +1,68 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-import {FaListUl} from 'react-icons/fa'
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1,
-  },
-}));
+import {MdMenu} from 'react-icons/md'
+import { useTheme } from '@material-ui/core/styles';
+import Drawer from '@material-ui/core/Drawer';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import {Link} from 'react-router-dom'
 
 export const Header = () => {
-  const classes = useStyles();
+  const classes = useTheme();
+  const [toggle, setMenuToggle] = useState(false);
+
+  const toggleDrawer = () => event => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
+    setMenuToggle(!toggle);
+  };
+
+  const NavItems = [
+    { text: 'Home', to:'/' },
+    { text: 'Login', to:'/login' },
+    { text: 'Register', to:'/register' },
+    { text: 'Notices', to:'/notices' }
+  ]
 
   return (
-    <AppBar position="static" data-testid="header">
+    <AppBar position="static" data-testid="header" color="primary" >
       <Toolbar>
-        <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-          <FaListUl className="logo"/>
+        <IconButton 
+          className={classes.menuButton} 
+          onClick={toggleDrawer()} 
+          aria-label="menu"
+        >
+          <Drawer anchor="left" open={toggle} onClose={toggleDrawer()}>
+            <div
+              className={classes.list}
+              role="presentation"
+              onClick={toggleDrawer()}
+              onKeyDown={toggleDrawer()}
+            >
+              <List>
+                {NavItems.map((item, index) => (
+                  <ListItem button key={item.text}>
+                    <ListItemIcon><MdMenu /></ListItemIcon>
+                    <Link to={item.to}>
+                      <ListItemText primary={item.text} />
+                    </Link>
+                  </ListItem>
+                ))}
+              </List>
+            </div>
+          </Drawer>
+          <MdMenu />
         </IconButton>
         <Typography variant="h6" className={classes.title}>
-          Notices
+          Renotify
         </Typography>
-        <Button color="inherit">Login</Button>
-        {/* <ul>
-          <li data-testid="add-task-action" className="settings__add"><FaPlus/></li>
-          <li data-testid="dark-mode-action" className="settings__darkmode"><FaToggleOn/></li>
-        </ul> */}
       </Toolbar>
     </AppBar>
   );

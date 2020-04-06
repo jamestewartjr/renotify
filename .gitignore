@@ -135,3 +135,4 @@ cypress/videos
 cypress/screenshots
 
 serviceKey.json
+serviceKey.js

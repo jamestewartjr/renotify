@@ -4,6 +4,6 @@
 describe('Home', function() {
   it('Visits Renotify home page', function() {
     cy.visit('http://localhost:3000/')
-    cy.contains('Notices')
+    cy.contains('Renotify')
   })
 })
