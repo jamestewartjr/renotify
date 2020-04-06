@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -14,6 +14,7 @@ import {useMutation} from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import {useForm} from '../utils/hooks'
+import {AuthContext} from '../context/auth'
 
 const Copyright = () => {
   return (
@@ -50,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Register = (props) => {
   const classes = useStyles();
-
+  const context = useContext(AuthContext)
   const [errors, setErrors] = useState({});  
 
   const { onChange, onSubmit, values} = useForm(registerUser, {
@@ -58,15 +59,17 @@ const Register = (props) => {
   });
 
   const [addUser, {loading}] = useMutation(REGISTER_USER, {
-    update(proxy, result){
+    update(_, {data: {register: userData}}){
+      context.login(userData)
       props.history.push('/notices');
     },
-    onError({ graphQLErrors, networkError }) {
-      if(errors || graphQLErrors[0].message) {
-        console.log('Register errors', errors)
-        console.log('Register grapherror', errors.graphQLErrors[0].message ? errors.graphQLErrors[0].message : null)
+    onError(errors) {
+      if(errors.graphQLErrors[0]){
+        setErrors(errors.graphQLErrors[0].message);
       }
-      setErrors(graphQLErrors[0].message || networkError);
+      if(errors.networkError){
+        setErrors(errors.networkError[0]);
+      }
     },
     variables: values
   })
@@ -149,7 +152,11 @@ const Register = (props) => {
           >
             Sign Up
           </Button>
-          <FormHelperText error={errors.length > 0 ? true : false}>{Object.values(errors)}</FormHelperText>
+          {Object.values(errors).map(errors => 
+            <FormHelperText key={errors} error={errors.length > 0 ? true : false}>
+              <span>{errors}</span>
+            </FormHelperText>
+          )}
           <Grid container justify="flex-end">
             <Grid item>
               <Link to="/login" variant="body2">
