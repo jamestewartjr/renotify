@@ -11,6 +11,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {FaRegStar} from 'react-icons/fa'
 import Signup from '../components/SignupCTA'
+import { Link as RouterLink } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   '@global': {
@@ -66,7 +67,12 @@ const tiers = [
   {
     title: 'Free',
     price: '0',
-    description: ['1 user', '1000 notifications', 'Email support'],
+    description: [
+      '1 user', 
+      '10 notifications/month', 
+      'Chrome',
+      // 'Email support'
+    ],
     buttonText: 'Sign up for free',
     buttonVariant: 'outlined',
   },
@@ -96,6 +102,9 @@ const tiers = [
   //   buttonVariant: 'outlined',
   // },
 ];
+const ButtonBehavior = React.forwardRef((props, ref) => (
+  <RouterLink ref={ref} to="/register" {...props} />
+));
 
 export default function Pricing() {
   const classes = useStyles();
@@ -120,8 +129,7 @@ export default function Pricing() {
           Pricing
         </Typography>
         <Typography variant="h5" align="center" color="textSecondary" component="p">
-          Quickly build an effective pricing table for your potential customers with this layout.
-          It&apos;s built with default Material-UI components with little customization.
+          All features are monthly limits. More pricing and features coming soon.
         </Typography>
       </Container>
       {/* End hero unit  */}
@@ -157,7 +165,11 @@ export default function Pricing() {
                   </ul>
                 </CardContent>
                 <CardActions>
-                  <Button fullWidth variant={tier.buttonVariant} color="primary">
+                  <Button 
+                    fullWidth 
+                    variant={tier.buttonVariant} 
+                    color="primary"  
+                    component={ButtonBehavior}>
                     {tier.buttonText}
                   </Button>
                 </CardActions>
