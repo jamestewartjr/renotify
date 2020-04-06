@@ -13,7 +13,8 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import Notices from './pages/Notices'
 import Container from '@material-ui/core/Container';
-
+import {AuthProvider } from './context/auth'
+import AuthRoute from './components/AuthRoute'
 
 const httpLink = createHttpLink({
   uri: 'http://localhost:3100/'
@@ -30,19 +31,21 @@ const theme = createMuiTheme(themeObj);
 
 function App() {
   return (
-    <Router>
-      <ApolloProvider client={client}>
-        <ThemeProvider theme={theme}>
-          <Header />
-          <Container data-testid="app" className="App">
-            <Route exact path='/' component={Home}/>
-            <Route exact path='/login' component={Login}/>
-            <Route exact path='/register' component={Register}/>
-            <Route exact path='/notices' component={Notices}/>
-          </Container>
-        </ThemeProvider>
-      </ApolloProvider>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <ApolloProvider client={client}>
+          <ThemeProvider theme={theme}>
+            <Header />
+            <Container data-testid="app" className="App">
+              <Route exact path='/' component={Home}/>
+              <AuthRoute exact path='/login' component={Login}/>
+              <AuthRoute exact path='/register' component={Register}/>
+              <Route exact path='/notices' component={Notices}/>
+            </Container>
+          </ThemeProvider>
+        </ApolloProvider>
+      </Router>
+    </AuthProvider>
   );
 }
 

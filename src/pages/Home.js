@@ -51,16 +51,6 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'baseline',
     marginBottom: theme.spacing(2),
   },
-  footer: {
-    borderTop: `1px solid ${theme.palette.divider}`,
-    marginTop: theme.spacing(8),
-    paddingTop: theme.spacing(3),
-    paddingBottom: theme.spacing(3),
-    [theme.breakpoints.up('sm')]: {
-      paddingTop: theme.spacing(6),
-      paddingBottom: theme.spacing(6),
-    },
-  },
 }));
 
 const tiers = [
@@ -113,8 +103,8 @@ export default function Pricing() {
     <React.Fragment>
       <CssBaseline />
       {/* Hero unit */}
-      <Container maxWidth="" component="main" className={classes.hero}>
-        <Typography component="h1" variant="h2" align="center" color="#fff">
+      <Container maxWidth="lg" component="main" className={classes.hero}>
+        <Typography component="h1" variant="h2" align="center">
           Tired of Notifications?
         </Typography>
         <Typography variant="h5" align="center" color="textSecondary" component="p">

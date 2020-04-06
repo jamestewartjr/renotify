@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -13,6 +13,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import {useForm} from '../utils/hooks'
 import {useMutation} from '@apollo/react-hooks';
 import gql from 'graphql-tag';
+import {AuthContext} from '../context/auth'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -35,8 +36,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Login = (props) => {
+  const context = useContext(AuthContext)
   const classes = useStyles();
-
   const [errors, setErrors] = useState({});  
 
   const { onChange, onSubmit, values} = useForm(signinUser, {
@@ -44,7 +45,8 @@ const Login = (props) => {
   });
 
   const [loginUser, {loading}] = useMutation(LOGIN_USER, {
-    update(proxy, result){
+    update(_, {data: {login: userData}}){
+      context.login(userData)
       props.history.push('/notices');
     },
     onError(errors) {
@@ -52,7 +54,7 @@ const Login = (props) => {
         setErrors(errors.graphQLErrors[0].message);
       }
       if(errors.networkError){
-        setErrors(errors.networkError);
+        setErrors(errors.networkError[0]);
       }
     },
     variables: values
@@ -99,7 +101,11 @@ const Login = (props) => {
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           /> */}
-          <FormHelperText error={errors.length > 0 ? true : false}>{Object.values(errors)}</FormHelperText>
+          {Object.values(errors).map(errors => 
+            <FormHelperText key={errors} error={errors.length > 0 ? true : false}>
+              <span>{errors}</span>
+            </FormHelperText>
+          )}
           <Button
             type="submit"
             fullWidth
@@ -135,7 +141,7 @@ const LOGIN_USER = gql`
     $email: String!
     $password: String!
   ) {
-    login( email: $emai  password: $password  )
+    login( email: $email  password: $password  )
     {
      token user{ id email username createdAt }
     }
