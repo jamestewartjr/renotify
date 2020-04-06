@@ -78,7 +78,14 @@ export const Header = () => {
         <Typography variant="h6" className={classes.title}>
           Renotify
         </Typography>
-        {user && <Button variant='text' color="inherit">Logout</Button>}
+        {user && <Button 
+          variant='text' 
+          color="inherit"
+          disableFocusRipple
+          href='/'
+        >
+          Logout
+        </Button>}
       </Toolbar>
     </AppBar>
   );
