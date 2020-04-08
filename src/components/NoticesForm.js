@@ -1,5 +1,4 @@
-import React, {useContext, useState} from 'react';
-import {Link} from 'react-router-dom';
+import React from 'react';
 import gql from 'graphql-tag';
 import {useMutation} from '@apollo/react-hooks';
 
@@ -9,8 +8,6 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import FormHelperText from '@material-ui/core/FormHelperText';
-
-import {AuthContext} from '../context/auth'
 import {useForm} from '../utils/hooks'
 
 const useStyles = makeStyles((theme) => ({
@@ -24,31 +21,24 @@ const useStyles = makeStyles((theme) => ({
 
 const NoticesForm = (props) => {
   const classes = useStyles();
-  const [errors, setErrors] = useState({});  
+  // const [errors, setErrors] = useState({});  
 
-  const { onChange, onSubmit, values} = useForm(createNoticeCallback, {body: ''});
+  const { onChange, onSubmit, values} = useForm(createNoticeCallback,
+    {body: ''});
 
   const [createNotice, {error}] = useMutation(CREATE_NOTICE_MUTATION, {
     update(_, result){
+      console.log('notice Form error', error)
+
       console.log(result)
-      // props.history.push('/notices');
       values.body = ''
-    },
-    onError(errors) {
-      console.log(errors)
-      if(errors.graphQLErrors[0]){
-        setErrors(errors.graphQLErrors[0].message);
-      }
-      if(errors.networkError){
-        setErrors(errors.networkError);
-      }
     },
     variables: values
   })
 
   function createNoticeCallback(){ createNotice()}
 
-
+  console.log('notice Form error', error)
   // const {data} = useQuery(FETCH_NOTICES);
 
   return (
@@ -73,11 +63,9 @@ const NoticesForm = (props) => {
             onChange={onChange}
             value={values.body}
           />
-          {Object.values(errors).map(errors => 
-            <FormHelperText key={errors} error={errors.length > 0 ? true : false}>
-              <span>{errors}</span>
-            </FormHelperText>
-          )}
+          {error && <FormHelperText key={error} error={true}>
+            <span>{error}</span>
+          </FormHelperText>}
           <Button
             type="submit"
             fullWidth
