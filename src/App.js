@@ -15,16 +15,23 @@ import Notices from './pages/Notices'
 import Container from '@material-ui/core/Container';
 import {AuthProvider } from './context/auth'
 import AuthRoute from './components/AuthRoute'
+import {setContext} from 'apollo-link-context'
 
 const httpLink = createHttpLink({
   uri: 'http://localhost:3100/'
 });
 
-const client = new ApolloClient({
-  link: httpLink,
-  cache: new InMemoryCache({
-    dataIdFromObject: o => (o.id ? `${o.__typename}-${o.id}`: null),
+const authLink = setContext( () => {
+  const token = localStorage.getItem('JWTToken')
+  return ({
+    headers: { Authorization: token ? `Bearer ${token}` : '' }
   })
+})
+
+const client = new ApolloClient({
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache({
+    dataIdFromObject: o => (o.id ? `${o.__typename}-${o.id}`: null),  })
 });
 
 const theme = createMuiTheme(themeObj);
@@ -38,9 +45,10 @@ function App() {
             <Header />
             <Container data-testid="app" className="App">
               <Route exact path='/' component={Home}/>
-              <AuthRoute exact path='/login' component={Login}/>
-              <AuthRoute exact path='/register' component={Register}/>
-              <Route exact path='/notices' component={Notices}/>
+              <Route exact path='/login' component={Login}/>
+              <Route exact path='/register' component={Register}/>
+              {/* <Route exact path='/notices' component={Notices}/> */}
+              <AuthRoute exact path='/notices' component={Notices}/>
             </Container>
           </ThemeProvider>
         </ApolloProvider>

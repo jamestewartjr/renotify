@@ -2,11 +2,25 @@ const {db} = require('../../util/admin')
 const {firebaseAuth} = require('../../util/firebaseAuth')
 const {AuthenticationError} = require('apollo-server-express')
 
-const fetchAllNotices = async () => {
+const fetchAllNotices = async (_, {body}, context) => {
   const notices = await db
     .collection('notices')
     .get();
   return notices.docs.map(notice => notice.data());
+}
+
+const fetchNoticesByUsername = async (_, args, context) => {
+  try {
+    let user = await firebaseAuth(context)
+    const notices = await db
+      .collection('notices')
+      .where('user', '==', user.username)
+      .get();
+    return notices.docs.map(notice => notice.data());
+  }
+  catch (error){
+    throw new Error(error)
+  }
 }
 
 const fetchNoticeById = async (_, {noticeId}) => {
@@ -33,13 +47,13 @@ const fetchNoticeById = async (_, {noticeId}) => {
   }
 }
 
-const createNotice = async (_, {body}, context) => {
+const createNotice = async (_, args, context) => {
   try{
     let user = await firebaseAuth(context)
     const newNotice = {
-      name: body,
+      name: args.body,
       user: user.username,
-      platformId: 'unknown',
+      platformId: args.platformId || 'unknown',
       createdAt: new Date().toISOString(),
     };
     let doc = await db.collection('notices').add(newNotice)
@@ -49,7 +63,6 @@ const createNotice = async (_, {body}, context) => {
   }
   catch(error)  {
     console.error('Create notice error: ',error)
-    throw new Error ('Something went wrong. Please create a new notice')
   }
 }
 
@@ -77,6 +90,7 @@ const deleteNotice = async (_, {noticeId}, context) => {
 module.exports = {
   Query: {
     fetchAllNotices, 
+    fetchNoticesByUsername,
     fetchNoticeById
   },
   Mutation: {

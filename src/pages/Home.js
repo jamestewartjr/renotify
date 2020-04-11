@@ -96,8 +96,8 @@ const ButtonBehavior = React.forwardRef((props, ref) => (
   <RouterLink ref={ref} to="/register" {...props} />
 ));
 
-export default function Pricing() {
-  const classes = useStyles();
+export default function Home() {
+  const classes = useStyles()
 
   return (
     <React.Fragment>
