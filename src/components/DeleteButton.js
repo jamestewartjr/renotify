@@ -22,18 +22,27 @@ function DeleteButton(props) {
   const {noticeId} = props;
   const [deleteNotice] = useMutation(DELETE_NOTICE, {
     update(proxy) {
-      const data = proxy.readQuery({
-        query: FETCH_USER_NOTICES
-      });
+      const data = proxy.readQuery({query: FETCH_USER_NOTICES});
       data.fetchNoticesByUsername = data.fetchNoticesByUsername.filter(
-        notice => notice.id !== noticeId
+        notice => notice.noticeId !== noticeId
       );
-      proxy.writeQuery({ query: FETCH_USER_NOTICES, data });
+      proxy.writeQuery({query: FETCH_USER_NOTICES, data});
       // if (callback) callback();
       setShowAlert(true);
 
     },
-    variables: { noticeId }
+    onError(error) {
+      if(error.graphQLErrors[0]){
+        console.error(error.graphQLErrors[0])     
+        // setErrors(error.graphQLErrors[0].message);
+      }
+      if(error.networkError){
+        console.error(error.networkError)     
+
+        // setErrors(error.networkError[0]);
+      }
+    },
+    variables: {noticeId} 
   });
   return (
     <>
@@ -41,7 +50,7 @@ function DeleteButton(props) {
         edge="end" 
         aria-label="delete" 
         color="secondary"
-        onClick={() => deleteNotice()}
+        onClick={() => deleteNotice(noticeId)}
       >
         <FaTrashAlt />
       </IconButton>

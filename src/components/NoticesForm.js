@@ -27,8 +27,7 @@ const NoticesForm = (props) => {
 
   const [createNotice, {error}] = useMutation(CREATE_NOTICE_MUTATION, {
     update(proxy, result){
-      const data = proxy.readQuery({query: FETCH_USER_NOTICES  })
-
+      const data = proxy.readQuery({query: FETCH_USER_NOTICES})
       data.fetchNoticesByUsername = [result.data.createNotice, ...data.fetchNoticesByUsername]
       proxy.writeQuery({ query: FETCH_USER_NOTICES , data})
       values.body = ''
