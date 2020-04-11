@@ -5,12 +5,12 @@ import { AuthContext } from '../context/auth';
 
 const AuthRoute = ({ component: Component, ...rest }) => {
   const { user } = useContext(AuthContext);
-
+  console.log('auth user', user)
   return (
     <Route
       {...rest}
       render={(props) =>
-        user ? <Redirect to="/notices" /> : <Component {...props} />
+        user ? <Component {...props} /> : <Redirect to="/login" /> 
       }
     />
   );

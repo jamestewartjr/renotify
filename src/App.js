@@ -46,9 +46,9 @@ function App() {
             <Header />
             <Container data-testid="app" className="App">
               <Route exact path='/' component={Home}/>
-              <AuthRoute exact path='/login' component={Login}/>
-              <AuthRoute exact path='/register' component={Register}/>
-              <Route exact path='/notices' component={Notices}/>
+              <Route exact path='/login' component={Login}/>
+              <Route exact path='/register' component={Register}/>
+              <AuthRoute exact path='/notices' component={Notices}/>
             </Container>
           </ThemeProvider>
         </ApolloProvider>
