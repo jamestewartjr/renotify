@@ -4,9 +4,7 @@ import {useQuery} from '@apollo/react-hooks';
 import {FETCH_USER_NOTICES} from '../utils/queries'
 
 export const NoticesList = () => {
-  // const {data} = useQuery(FETCH_NOTICES);
   const {data} = useQuery(FETCH_USER_NOTICES);
-  console.log('NoticesList fetch data', data)
   return (
     <div className="notices" data-testid="notices">
       <ul className="notices__list">

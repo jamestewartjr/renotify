@@ -24,15 +24,14 @@ const httpLink = createHttpLink({
 const authLink = setContext( () => {
   const token = localStorage.getItem('JWTToken')
   return ({
-    headers: { Authorization: token ? `Bearer ${token}` : null }
+    headers: { Authorization: token ? `Bearer ${token}` : '' }
   })
 })
 
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: new InMemoryCache({
-    dataIdFromObject: o => (o.id ? `${o.__typename}-${o.id}`: null),
-  })
+    dataIdFromObject: o => (o.id ? `${o.__typename}-${o.id}`: null),  })
 });
 
 const theme = createMuiTheme(themeObj);
@@ -48,6 +47,7 @@ function App() {
               <Route exact path='/' component={Home}/>
               <Route exact path='/login' component={Login}/>
               <Route exact path='/register' component={Register}/>
+              {/* <Route exact path='/notices' component={Notices}/> */}
               <AuthRoute exact path='/notices' component={Notices}/>
             </Container>
           </ThemeProvider>
