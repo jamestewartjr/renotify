@@ -2,11 +2,12 @@ import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import Chip from '@material-ui/core/Chip';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import Checkbox from '@material-ui/core/Checkbox';
 import DeleteButton from '../components/DeleteButton';
-
+import Typography from '@material-ui/core/Typography';
 import {useQuery} from '@apollo/react-hooks';
 import {FETCH_USER_NOTICES} from '../utils/queries'
 
@@ -21,73 +22,55 @@ export const NoticesList = () => {
   const classes = useStyles();
   const {data} = useQuery(FETCH_USER_NOTICES);
 
-  // const toggleDrawer = () => event => {
-  //   if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-  //     return;
-  //   }
-  //   setMenuToggle(!toggle);
-  // };
+  const [checked, setChecked] = React.useState([0]);
+  const handleToggle = (value) => () => {
+    const currentIndex = checked.indexOf(value);
+    const newChecked = [...checked];
+
+    if (currentIndex === -1) {
+      newChecked.push(value);
+    } else {
+      newChecked.splice(currentIndex, 1);
+    }
+    setChecked(newChecked);
+  };
 
   return (
-  //   <div className="notices" data-testid="notices">
-  //     <ul className="notices__list">
-  //       {data && data.fetchNoticesByUsername.map( notice => (
-  //         <li key={`${notice.name}`}>
-  //           <h3 data-testid="source-name">{notice.platformId}</h3>
-  //           {notice.name} from {notice.user}
-  //           <Chip label={notice.createdAt}/>
-  //         </li>
-  //       ))}
-  //     </ul>
-  //   </div>
     <List className={classes.root}>
-      {data && data.fetchNoticesByUsername.map((notice) => {
-        const labelId = `checkbox-list-label-${notice.name}`;
-        return (
-          <ListItem 
-            key={notice.name} 
-            role="listitem"
-            alignItems="center"
-            // onClick={handleToggle(notice)}
-          >
-            {/* <ListItemIcon>
+      {(data 
+        && data.fetchNoticesByUsername.map((notice) => {
+          const labelId = `checkbox-list-label-${notice.name}`;
+          return (
+            <ListItem 
+              key={notice.name} 
+              role="listitem"
+              alignItems="center"
+            >
               <Checkbox
                 edge="start"
                 checked={checked.indexOf(notice) !== -1}
                 tabIndex={-1}
                 disableRipple
                 inputProps={{ 'aria-labelledby': labelId }}
+                onClick={() => handleToggle()}
               />
-            </ListItemIcon> */}
-            <ListItemText id={labelId} primary={notice.name} />
-            <ListItemSecondaryAction>
-              <DeleteButton noticeId={notice.noticeId}/>
-            </ListItemSecondaryAction>
-          </ListItem>
-        );
-      })}
+              <ListItemText 
+                id={labelId} 
+                primary={ 
+                  <Typography variant="h6">
+                    {notice.name}
+                  </Typography>
+                }
+              />
+              <Chip disabled label={notice.createdAt}/>
+              <ListItemSecondaryAction>
+                <DeleteButton noticeId={notice.noticeId}/>
+              </ListItemSecondaryAction>
+            </ListItem>
+          );
+        }))
+      || <Typography align='center' variant="subtitle1"> Add a Notice! </Typography>
+      }
     </List>
   )
 }
-
-
-
-
-// export default function CheckboxList() {
-// const [checked, setChecked] = React.useState([0]);
-// const handleToggle = (value) => () => {
-//   const currentIndex = checked.indexOf(value);
-//   const newChecked = [...checked];
-
-//   if (currentIndex === -1) {
-//     newChecked.push(value);
-//   } else {
-//     newChecked.splice(currentIndex, 1);
-//   }
-//   setChecked(newChecked);
-// };
-
-// return (
-//   </List
-// );
-// }
