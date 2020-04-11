@@ -1,18 +1,16 @@
 import React from 'react';
 import gql from 'graphql-tag';
 import {useMutation} from '@apollo/react-hooks';
-
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import {useForm} from '../utils/hooks'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(2),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -42,23 +40,21 @@ const NoticesForm = (props) => {
   // const {data} = useQuery(FETCH_NOTICES);
 
   return (
-    <Container component="main" maxWidth="xs">
+    <section className="notice_form">
       <div className={classes.paper}>
-        <Typography component="h1" variant="h5">
-          Create Notice
-        </Typography>
         <form 
           className={classes.form} 
           onSubmit={onSubmit} 
           noValidate
         >
+          <Typography align='center' variant="subtitle1"> Add Notice </Typography>
           <TextField
             variant="outlined"
             margin="normal"
             required
             fullWidth
             id="body"
-            label="Notice Title"
+            label="Notice"
             name="body"
             onChange={onChange}
             value={values.body}
@@ -78,7 +74,7 @@ const NoticesForm = (props) => {
  
         </form>
       </div>
-    </Container>
+    </section>
   )
 }
 
