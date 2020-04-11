@@ -21,7 +21,8 @@ module.exports = gql`
     confirmPassword: String!
   }
   type Query{
-    fetchAllNotices: [Notice]
+    fetchAllNotices: [Notice],
+    fetchNoticesByUsername: [Notice],
     fetchNoticeById(noticeId: String!): Notice
   }
   type AuthPayload {
