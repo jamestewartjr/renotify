@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import FormHelperText from '@material-ui/core/FormHelperText';
+// import FormHelperText from '@material-ui/core/FormHelperText';
 import {useForm} from '../utils/hooks'
 import {FETCH_USER_NOTICES } from '../utils/queries'
 
@@ -25,7 +25,7 @@ const NoticesForm = (props) => {
   const { onChange, onSubmit, values} = useForm(createNoticeCallback,
     {body: ''});
 
-  const [createNotice, {error}] = useMutation(CREATE_NOTICE_MUTATION, {
+  const [createNotice ] = useMutation(CREATE_NOTICE_MUTATION, {
     update(proxy, result){
       const data = proxy.readQuery({query: FETCH_USER_NOTICES})
       data.fetchNoticesByUsername = [result.data.createNotice, ...data.fetchNoticesByUsername]
