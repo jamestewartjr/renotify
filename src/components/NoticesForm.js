@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import {useForm} from '../utils/hooks'
+import {FETCH_NOTICES} from '../utils/queries'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -25,19 +26,17 @@ const NoticesForm = (props) => {
     {body: ''});
 
   const [createNotice, {error}] = useMutation(CREATE_NOTICE_MUTATION, {
-    update(_, result){
-      console.log('notice Form error', error)
-
-      console.log(result)
+    update(proxy, result){
+      const data = proxy.readQuery({query: FETCH_NOTICES })
+      data.fetchAllNotices = [result.data.createNotice, ...data.fetchAllNotices]
+      proxy.writeQuery({ query: FETCH_NOTICES, data})
       values.body = ''
     },
     variables: values
   })
 
   function createNoticeCallback(){ createNotice()}
-
-  console.log('notice Form error', error)
-  // const {data} = useQuery(FETCH_NOTICES);
+  // TODO add validation for empty form
 
   return (
     <section className="notice_form">
@@ -59,9 +58,9 @@ const NoticesForm = (props) => {
             onChange={onChange}
             value={values.body}
           />
-          {error && <FormHelperText key={error} error={true}>
+          {/* {error && <FormHelperText key={error} error={true}>
             <span>{error}</span>
-          </FormHelperText>}
+          </FormHelperText>} */}
           <Button
             type="submit"
             fullWidth
@@ -83,7 +82,7 @@ export default NoticesForm;
 const CREATE_NOTICE_MUTATION = gql`
 mutation createNotice($body:String!){
   createNotice(body:$body){
-    id body createdAt name
+    id name createdAt user platformId
   }
 }
 `

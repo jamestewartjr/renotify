@@ -1,11 +1,12 @@
 import React from 'react';
 import Chip from '@material-ui/core/Chip';
-import gql from 'graphql-tag';
 import {useQuery} from '@apollo/react-hooks';
+import {FETCH_NOTICES} from '../utils/queries'
 
 export const NoticesList = () => {
   const {data} = useQuery(FETCH_NOTICES);
-
+  // const {data} = useQuery(FETCH_USER_NOTICES);
+  // console.log('NoticesList fetch data', data)
   return (
     <div className="notices" data-testid="notices">
       <ul className="notices__list">
@@ -20,15 +21,3 @@ export const NoticesList = () => {
     </div>
   )
 }
-
-const FETCH_NOTICES = gql`
-  {
-    fetchAllNotices{
-      id
-      name
-      platformId
-      user
-      createdAt
-    }
-  }
-`
