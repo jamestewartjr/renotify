@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import {useForm} from '../utils/hooks'
-import {FETCH_NOTICES} from '../utils/queries'
+import {FETCH_USER_NOTICES } from '../utils/queries'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -27,10 +27,22 @@ const NoticesForm = (props) => {
 
   const [createNotice, {error}] = useMutation(CREATE_NOTICE_MUTATION, {
     update(proxy, result){
-      const data = proxy.readQuery({query: FETCH_NOTICES })
-      data.fetchAllNotices = [result.data.createNotice, ...data.fetchAllNotices]
-      proxy.writeQuery({ query: FETCH_NOTICES, data})
+      const data = proxy.readQuery({query: FETCH_USER_NOTICES  })
+
+      data.fetchNoticesByUsername = [result.data.createNotice, ...data.fetchNoticesByUsername]
+      proxy.writeQuery({ query: FETCH_USER_NOTICES , data})
       values.body = ''
+    },
+    onError(error) {
+      if(error.graphQLErrors[0]){
+        console.error(error.graphQLErrors[0])     
+        // setErrors(error.graphQLErrors[0].message);
+      }
+      if(error.networkError){
+        console.error(error.networkError)     
+
+        // setErrors(error.networkError[0]);
+      }
     },
     variables: values
   })
@@ -82,7 +94,7 @@ export default NoticesForm;
 const CREATE_NOTICE_MUTATION = gql`
 mutation createNotice($body:String!){
   createNotice(body:$body){
-    id name createdAt user platformId
+    id noticeId name createdAt user platformId
   }
 }
 `

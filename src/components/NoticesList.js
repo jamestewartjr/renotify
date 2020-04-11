@@ -22,7 +22,7 @@ export const NoticesList = () => {
   const classes = useStyles();
   const {data} = useQuery(FETCH_USER_NOTICES);
 
-  const [checked, setChecked] = React.useState([0]);
+  const [checked, setChecked] = useState([0]);
   const handleToggle = (value) => () => {
     const currentIndex = checked.indexOf(value);
     const newChecked = [...checked];

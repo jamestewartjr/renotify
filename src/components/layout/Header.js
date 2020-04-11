@@ -14,6 +14,7 @@ import {Link} from 'react-router-dom'
 import {AuthContext} from '../../context/auth'
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
+import {  Redirect } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,6 +46,11 @@ export const Header = () => {
     { text: 'Register', to:'/register' },
     { text: 'Notices', to:'/notices' }
   ]
+
+  const handleLogout = () => {
+    logout(); 
+    return <Redirect to='/'/>
+  }
 
   return (
     <AppBar position="static" data-testid="header" color="primary" >
@@ -83,7 +89,7 @@ export const Header = () => {
           variant='text' 
           color="inherit"
           disableFocusRipple
-          onClick={logout}
+          onClick={() => handleLogout()}
         >
           Logout
         </Button>}
