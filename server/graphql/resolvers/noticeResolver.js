@@ -58,7 +58,9 @@ const createNotice = async (_, args, context) => {
     };
     let doc = await db.collection('notices').add(newNotice)
     const notice = newNotice
-    notice.id = doc.id
+    await db.collection('notices').doc(doc.id).update({
+      noticeId: doc.id
+    })
     return notice
   }
   catch(error)  {

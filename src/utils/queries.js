@@ -3,7 +3,7 @@ import gql from 'graphql-tag'
 export const FETCH_NOTICES = gql`
 {
   fetchAllNotices{
-    id
+    noticeId
     name
     platformId
     user
@@ -16,7 +16,7 @@ export const FETCH_USER_NOTICES = gql`
 {
   fetchNoticesByUsername
   {
-    id
+    noticeId
     name
     platformId
     user
