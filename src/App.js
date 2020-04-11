@@ -47,8 +47,8 @@ function App() {
               <Route exact path='/' component={Home}/>
               <Route exact path='/login' component={Login}/>
               <Route exact path='/register' component={Register}/>
-              {/* <Route exact path='/notices' component={Notices}/> */}
-              <AuthRoute exact path='/notices' component={Notices}/>
+              <Route exact path='/notices' component={Notices}/>
+              {/* <AuthRoute exact path='/notices' component={Notices}/> */}
             </Container>
           </ThemeProvider>
         </ApolloProvider>

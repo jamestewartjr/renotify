@@ -7,6 +7,7 @@ module.exports = gql`
     user: String
     platformId: String
     createdAt: String
+    noticeId: String
   }
   type User{
     id: ID
@@ -33,6 +34,6 @@ module.exports = gql`
     register(registerInput: RegisterInput): AuthPayload!
     login(email: String!, password: String!): AuthPayload!
     createNotice(body: String!): Notice
-    deleteNotice(noticeId: ID!): String
+    deleteNotice(noticeId: String!): String
   }
 `
