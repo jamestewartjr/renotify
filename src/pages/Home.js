@@ -105,10 +105,11 @@ export default function Home() {
       {/* Hero unit */}
       <Container maxWidth="lg" component="main" className={classes.hero}>
         <Typography component="h1" variant="h2" align="center">
-          Tired of Notifications?
+          Too many notifications?
         </Typography>
         <Typography variant="h5" align="center" color="textSecondary" component="p">
-          Manage your notifications by deciding when you want to see them with Renotify.
+          Don't avoid them. Manange them. Manage your notifications by 
+          deciding when you want to see them with Renotify.
         </Typography>
       </Container>
 

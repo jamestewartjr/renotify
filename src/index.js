@@ -20,6 +20,5 @@ if (process.env.NODE_ENV !== 'production') {
   );
 }
 
-// serviceWorker.register();
-
-serviceWorker.unregister();
+serviceWorker.register();
+// serviceWorker.unregister();
