@@ -5,8 +5,8 @@ import IconButton from '@material-ui/core/IconButton';
 import Snackbar from '@material-ui/core/Snackbar';
 import {FaTrashAlt} from 'react-icons/fa'
 import { useMutation } from '@apollo/react-hooks';
-import { DELETE_NOTICE} from '../utils/mutations'
-import {FETCH_USER_NOTICES} from '../utils/queries'
+import { DELETE_NOTICE} from '../api/mutations'
+import {FETCH_USER_NOTICES} from '../api/queries'
 
 const useStyles = makeStyles((theme) => ({
   alert: {

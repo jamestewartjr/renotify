@@ -9,7 +9,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import DeleteButton from '../components/DeleteButton';
 import Typography from '@material-ui/core/Typography';
 import {useQuery} from '@apollo/react-hooks';
-import {FETCH_USER_NOTICES} from '../utils/queries'
+import {FETCH_USER_NOTICES} from '../api/queries'
 
 const useStyles = makeStyles((theme) => ({
   root: {
