@@ -12,6 +12,7 @@ import Container from '@material-ui/core/Container';
 import {FaRegStar} from 'react-icons/fa'
 import Signup from '../components/SignupCTA'
 import { Link as RouterLink } from 'react-router-dom';
+import AddToHome from '../components/AddToHome';
 
 const useStyles = makeStyles((theme) => ({
   '@global': {
@@ -114,6 +115,7 @@ export default function Home() {
       </Container>
 
       <Signup/>
+      <AddToHome/>
 
       <Container maxWidth="sm" component="main" className={classes.heroContent}>
         <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
