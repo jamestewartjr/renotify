@@ -112,8 +112,8 @@ export default function Home() {
         </Typography>
       </Container>
 
-      <Signup/>
-
+      {/* <Signup/> */}
+      <h3>Coming Soon!</h3>
       <Container maxWidth="sm" component="main" className={classes.heroContent}>
         <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
           Pricing
