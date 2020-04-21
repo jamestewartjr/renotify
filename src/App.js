@@ -1,21 +1,33 @@
-import React from 'react';
+import React, { useEffect }  from 'react';
 import './styles/index.css';
-import {Header} from './components/layout/Header'
+import {createBrowserHistory} from 'history'
 import ApolloClient from 'apollo-client';
 import {InMemoryCache} from 'apollo-cache-inmemory';
+import {setContext} from 'apollo-link-context'
 import {createHttpLink} from 'apollo-link-http';
 import { ApolloProvider } from '@apollo/react-hooks';
+import Container from '@material-ui/core/Container';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import {Router, Route, Switch} from 'react-router-dom';
+import ReactGA from 'react-ga';
 import themeObj from './styles/theme.json';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Notices from './pages/Notices'
-import Container from '@material-ui/core/Container';
 import {AuthProvider } from './context/auth'
 import AuthRoute from './components/AuthRoute'
-import {setContext} from 'apollo-link-context'
+import {Header} from './components/layout/Header'
+
+const history = createBrowserHistory()
+// ReactGA.initialize(process.env.GA_TRACKING);
+ReactGA.initialize('229806316');
+
+history.listen((location, action) => {
+  ReactGA.set({ page: location.pathname });
+  ReactGA.pageview(location.pathname + location.search);
+  console.log(location.pathname)
+});
 
 const httpLink = createHttpLink({
   uri: 'http://localhost:3100/'
@@ -36,19 +48,25 @@ const client = new ApolloClient({
 
 const theme = createMuiTheme(themeObj);
 
-function App() {
+const App = () => {
+
+  useEffect(() => {
+    ReactGA.pageview(window.location.pathname + window.location.search)
+  }, [])
+
   return (
     <AuthProvider>
-      <Router>
+      <Router history={history}>
         <ApolloProvider client={client}>
           <ThemeProvider theme={theme}>
             <Header />
             <Container data-testid="app" className="App">
-              <Route exact path='/' component={Home}/>
-              <Route exact path='/login' component={Login}/>
-              <Route exact path='/register' component={Register}/>
-              <Route exact path='/notices' component={Notices}/>
-              {/* <AuthRoute exact path='/notices' component={Notices}/> */}
+              <Switch>
+                <Route exact path='/' component={Home}/>
+                <Route exact path='/login' component={Login}/>
+                <Route exact path='/register' component={Register}/>
+                <AuthRoute exact path='/notices' component={Notices}/>
+              </Switch>
             </Container>
           </ThemeProvider>
         </ApolloProvider>
