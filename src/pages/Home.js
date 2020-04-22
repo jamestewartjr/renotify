@@ -10,8 +10,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {FaRegStar} from 'react-icons/fa'
-import Signup from '../components/SignupCTA'
 import { Link as RouterLink } from 'react-router-dom';
+import Signup from '../components/SignupCTA'
 
 const useStyles = makeStyles((theme) => ({
   '@global': {
@@ -113,7 +113,9 @@ export default function Home() {
       </Container>
 
       {/* <Signup/> */}
-      <h3>Coming Soon!</h3>
+      <Typography component="h5" variant="h2" align="center">
+        Coming Soon!
+      </Typography>
       <Container maxWidth="sm" component="main" className={classes.heroContent}>
         <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
           Pricing

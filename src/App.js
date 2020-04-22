@@ -26,7 +26,6 @@ ReactGA.initialize('229806316');
 history.listen((location, action) => {
   ReactGA.set({ page: location.pathname });
   ReactGA.pageview(location.pathname + location.search);
-  console.log(location.pathname)
 });
 
 const httpLink = createHttpLink({
