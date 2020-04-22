@@ -18,6 +18,7 @@ import Notices from './pages/Notices'
 import {AuthProvider } from './context/auth'
 import AuthRoute from './components/AuthRoute'
 import {Header} from './components/layout/Header'
+import NotFound from './components/NotFound'
 
 
 if (process.env.NODE_ENV !== 'production') {
@@ -64,6 +65,7 @@ const App = () => {
             <Header />
             <Container data-testid="app" className="App">
               <Switch>
+                <Route exact path='*' component={NotFound}/>
                 <Route exact path='/' component={Home}/>
                 <Route exact path='/login' component={Login}/>
                 <Route exact path='/register' component={Register}/>
