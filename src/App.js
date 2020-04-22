@@ -19,10 +19,13 @@ import {AuthProvider } from './context/auth'
 import AuthRoute from './components/AuthRoute'
 import {Header} from './components/layout/Header'
 
-const history = createBrowserHistory()
-// ReactGA.initialize(process.env.GA_TRACKING);
-ReactGA.initialize('229806316');
 
+if (process.env.NODE_ENV !== 'production') {
+  ReactGA.initialize('229806316',  { testMode: true });
+} else {
+  ReactGA.initialize('229806316');
+}
+const history = createBrowserHistory()
 history.listen((location, action) => {
   ReactGA.set({ page: location.pathname });
   ReactGA.pageview(location.pathname + location.search);
