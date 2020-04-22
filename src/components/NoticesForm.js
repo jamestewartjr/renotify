@@ -26,7 +26,7 @@ const NoticesForm = (props) => {
   const { onChange, onSubmit, values} = useForm(createNoticeCallback,
     {body: ''});
 
-  const [createNotice ] = useMutation(CREATE_NOTICE, {
+  const [createNotice] = useMutation(CREATE_NOTICE, {
     update(proxy, result){
       const data = proxy.readQuery({query: FETCH_USER_NOTICES})
       data.fetchNoticesByUsername = [result.data.createNotice, ...data.fetchNoticesByUsername]

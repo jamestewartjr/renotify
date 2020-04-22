@@ -42,9 +42,9 @@ export const Header = () => {
 
   const NavItems = [
     { text: 'Home', to:'/' },
-    { text: 'Login', to:'/login' },
-    { text: 'Register', to:'/register' },
-    { text: 'Notices', to:'/notices' }
+    // { text: 'Login', to:'/login' },
+    // { text: 'Register', to:'/register' },
+    // { text: 'Notices', to:'/notices' }
   ]
 
   const handleLogout = () => {
