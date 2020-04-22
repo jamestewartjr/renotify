@@ -12,6 +12,7 @@
     "apollo-client": "^2.6.8",
     "apollo-link-context": "^1.0.19",
     "apollo-link-http": "^1.5.16",
+    "firebase": "^7.14.1",
     "graphql": "^14.6.0",
     "graphql-tag": "^2.10.3",
     "history": "^4.10.1",
