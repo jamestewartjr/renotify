@@ -1,5 +1,4 @@
 import React from 'react';
-import gql from 'graphql-tag';
 import {useMutation} from '@apollo/react-hooks';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';

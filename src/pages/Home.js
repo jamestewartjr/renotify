@@ -11,7 +11,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {FaRegStar} from 'react-icons/fa'
 import { Link as RouterLink } from 'react-router-dom';
-import AddToHome from '../components/AddToHome';
+// import AddToHome from '../components/AddToHome';
 // import Signup from '../components/SignupCTA'
 
 const useStyles = makeStyles((theme) => ({
