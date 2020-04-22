@@ -65,11 +65,11 @@ const App = () => {
             <Header />
             <Container data-testid="app" className="App">
               <Switch>
-                <Route exact path='*' component={NotFound}/>
                 <Route exact path='/' component={Home}/>
                 <Route exact path='/login' component={Login}/>
                 <Route exact path='/register' component={Register}/>
                 <AuthRoute exact path='/notices' component={Notices}/>
+                <Route exact path='*' component={NotFound}/>
               </Switch>
             </Container>
           </ThemeProvider>
