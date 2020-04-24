@@ -39,7 +39,10 @@ export const NoticesList = () => {
     messaging.requestPermission()
       .then( async () => {
         console.log('Have permission')
-        const token = await messaging.getToken();
+        return await messaging.getToken();
+      })
+      .then( (token) => {
+        console.log(token)
       })
       .catch( (error) => {
         console.log('Permission denied', error)

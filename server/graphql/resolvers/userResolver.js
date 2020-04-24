@@ -1,5 +1,7 @@
 const {db} = require('../../util/admin') 
-const firebase = require('firebase')
+const firebase = require('firebase/app')
+require('firebase/database');
+
 const {AuthenticationError} = require('apollo-server-express')
 const firebaseConfig = require('../../config/serviceKey')
 firebase.initializeApp(firebaseConfig);

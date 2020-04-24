@@ -4,6 +4,10 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 require('dotenv').config()
 
+if ("serviceWorker" in navigator) {
+
+}
+
 if (process.env.NODE_ENV !== 'production') {
   let axe = require('react-axe');
   axe(
