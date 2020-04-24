@@ -11,7 +11,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {FaRegStar} from 'react-icons/fa'
 import { Link as RouterLink } from 'react-router-dom';
-// import AddToHome from '../components/AddToHome';
 // import Signup from '../components/SignupCTA'
 
 const useStyles = makeStyles((theme) => ({
@@ -113,8 +112,7 @@ export default function Home() {
           deciding when you want to see them with Renotify.
         </Typography>
       </Container>
-      {/* <AddToHome/> 
-       <Signup/> */}
+      {/*        <Signup/> */}
       <Typography component="h5" variant="h2" align="center">
         Coming Soon!
       </Typography>

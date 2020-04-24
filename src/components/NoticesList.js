@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -10,6 +10,7 @@ import DeleteButton from '../components/DeleteButton';
 import Typography from '@material-ui/core/Typography';
 import {useQuery} from '@apollo/react-hooks';
 import {FETCH_USER_NOTICES} from '../api/queries'
+import {messaging} from '../utils/firebaseMessaging'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,6 +34,17 @@ export const NoticesList = () => {
   //   }
   //   setChecked(newChecked);
   // };
+
+  useEffect( ()=>{
+    messaging.requestPermission()
+      .then( async () => {
+        console.log('Have permission')
+        const token = await messaging.getToken();
+      })
+      .catch( (error) => {
+        console.log('Permission denied', error)
+      })
+  })
 
   return (
     <List className={classes.root}>

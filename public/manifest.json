@@ -33,5 +33,6 @@
   "display": "standalone",
   "theme_color": "#55b597",
   "background_color": "#ffffff",
-  "lang": "en-US"
+  "lang": "en-US",
+  "gcm_sender_id": "314548168483"
 }
