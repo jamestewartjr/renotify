@@ -22,10 +22,11 @@ import NotFound from './components/NotFound'
 
 
 if (process.env.NODE_ENV !== 'production') {
-  ReactGA.initialize(process.env.GA_TRACKING,  { testMode: true });
+  ReactGA.initialize('229806316',  { testMode: true });
 } else {
-  ReactGA.initialize(process.env.GA_TRACKING);
+  ReactGA.initialize('229806316');
 }
+
 const history = createBrowserHistory()
 history.listen((location, action) => {
   ReactGA.set({ page: location.pathname });
@@ -68,8 +69,8 @@ const App = () => {
                 <Route exact path='/' component={Home}/>
                 <Route exact path='/login' component={Login}/>
                 <Route exact path='/register' component={Register}/>
-                {/* <AuthRoute exact path='/notices' component={Notices}/> */}
-                <Route exact path='/notices' component={Notices}/>
+                <AuthRoute exact path='/notices' component={Notices}/>
+                {/* <Route exact path='/notices' component={Notices}/> */}
                 <Route exact path='*' component={NotFound}/>
               </Switch>
             </Container>

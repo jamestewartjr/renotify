@@ -4,10 +4,6 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 require('dotenv').config()
 
-if ("serviceWorker" in navigator) {
-
-}
-
 if (process.env.NODE_ENV !== 'production') {
   let axe = require('react-axe');
   axe(
@@ -24,5 +20,6 @@ if (process.env.NODE_ENV !== 'production') {
   );
 }
 
-serviceWorker.register();
-// serviceWorker.unregister();
+// serviceWorker.register();
+// serviceWorker.register(`/firebase-messaging-sw.js`)
+serviceWorker.unregister();

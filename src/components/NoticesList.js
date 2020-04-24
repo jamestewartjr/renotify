@@ -41,12 +41,10 @@ export const NoticesList = () => {
         console.log('Have permission')
         return await messaging.getToken();
       })
-      .then( (token) => {
-        console.log(token)
-      })
       .catch( (error) => {
         console.log('Permission denied', error)
       })
+    navigator.serviceWorker.addEventListener("message", (message) => console.log(message));
   })
 
   return (
