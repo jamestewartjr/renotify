@@ -10,7 +10,7 @@ import DeleteButton from '../components/DeleteButton';
 import Typography from '@material-ui/core/Typography';
 import {useQuery} from '@apollo/react-hooks';
 import {FETCH_USER_NOTICES} from '../api/queries'
-import {messaging} from '../utils/firebaseMessaging'
+// import {messaging} from '../utils/firebaseMessaging'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,17 +35,17 @@ export const NoticesList = () => {
   //   setChecked(newChecked);
   // };
 
-  useEffect( ()=>{
-    messaging.requestPermission()
-      .then( async () => {
-        console.log('Have permission')
-        return await messaging.getToken();
-      })
-      .catch( (error) => {
-        console.log('Permission denied', error)
-      })
-    navigator.serviceWorker.addEventListener("message", (message) => console.log(message));
-  })
+  // useEffect( ()=>{
+  //   messaging.requestPermission()
+  //     .then( async () => {
+  //       console.log('Have permission')
+  //       return await messaging.getToken();
+  //     })
+  //     .catch( (error) => {
+  //       console.log('Permission denied', error)
+  //     })
+  //   navigator.serviceWorker.addEventListener("message", (message) => console.log(message));
+  // })
 
   return (
     <List className={classes.root}>
