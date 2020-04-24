@@ -1,5 +1,4 @@
 import React from 'react';
-import gql from 'graphql-tag';
 import {useMutation} from '@apollo/react-hooks';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -7,7 +6,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 // import FormHelperText from '@material-ui/core/FormHelperText';
 import {useForm} from '../utils/hooks'
-import {FETCH_USER_NOTICES } from '../utils/queries'
+import {FETCH_USER_NOTICES } from '../api/queries'
+import {CREATE_NOTICE } from '../api/mutations'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -25,7 +25,7 @@ const NoticesForm = (props) => {
   const { onChange, onSubmit, values} = useForm(createNoticeCallback,
     {body: ''});
 
-  const [createNotice] = useMutation(CREATE_NOTICE_MUTATION, {
+  const [createNotice] = useMutation(CREATE_NOTICE, {
     update(proxy, result){
       const data = proxy.readQuery({query: FETCH_USER_NOTICES})
       data.fetchNoticesByUsername = [result.data.createNotice, ...data.fetchNoticesByUsername]
@@ -89,11 +89,3 @@ const NoticesForm = (props) => {
 }
 
 export default NoticesForm;
-
-const CREATE_NOTICE_MUTATION = gql`
-mutation createNotice($body:String!){
-  createNotice(body:$body){
-    id noticeId name createdAt user platformId
-  }
-}
-`
