@@ -31,14 +31,15 @@
     "eject": "react-scripts eject",
     "prod": "npm run build && serve -s build",
     "test": "cross-env CI=true react-scripts test --env=jsdom",
-    "test:coverage": "react-scripts test --coverage --watchAll",
-    "test:ee": "$(npm bin)/cypress run",
+    "test:coverage": "react-scripts test --coverage",
+    "test:e2e": "$(npm bin)/cypress run",
     "lint": "eslint src/**/*.js",
     "lint:fix": "eslint src/**/*.js --fix"
   },
   "husky": {
     "hooks": {
-      "pre-push": "npm run lint && npm test && npm run test:ee"
+      "pre-commit":"npm run lint && npm run test",
+      "pre-push": "npm test && npm run test:e2e"
     }
   },
   "jest": {
