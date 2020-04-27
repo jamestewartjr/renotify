@@ -34,7 +34,7 @@ jobs:
     steps:
       - checkout
       - run: sudo npm install -g @lhci/cli@0.3.x
-      - run: lhci autorun —config=./src/config/lighthouserc.json --collect.staticDistDir=./build
+      - run: lhci autorun —config=./src/config/lighthouserc.json
 workflows:
     install-and-deploy:
       jobs:
