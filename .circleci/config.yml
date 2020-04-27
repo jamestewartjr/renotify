@@ -41,5 +41,5 @@ workflows:
         - install-lint-test
         - build
         - lighthouse:
-          requires:
-             - build
+            requires:
+              - build
