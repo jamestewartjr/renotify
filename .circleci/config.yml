@@ -18,7 +18,7 @@ jobs:
             - run:
                 name: Test Changes
                 command: npm test
-  build-and-deploy:
+  build:
     executor:
       name: node/default
     steps:
@@ -28,16 +28,16 @@ jobs:
             - run: 
                 name: Build Production
                 command: npm run build
+  lighthouse:
+    docker:
+      - image: circleci/node:10-browsers
+    steps:
+      - checkout
+      - run: sudo npm install -g @lhci/cli@0.3.x
+      - run: lhci autorun —config=./src/config/lighthouserc.json
 workflows:
     install-and-deploy:
       jobs:
         - install-and-test
-        - build-and-deploy
+        - build
       jobs:
-        lighthouse:
-          docker:
-            - image: circleci/node:10-browsers
-          steps:
-            - checkout
-            - run: sudo npm install -g @lhci/cli@0.3.x
-            - run: lhci autorun —config=./.lighthouserc.json
