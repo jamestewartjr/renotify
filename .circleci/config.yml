@@ -2,7 +2,7 @@ version: 2.1
 orbs:
   node: circleci/node@1.1.6
 jobs:
-  install-and-test:
+  install-lint-test:
     executor:
       name: node/default
     steps:
@@ -38,6 +38,6 @@ jobs:
 workflows:
     install-and-deploy:
       jobs:
-        - install-and-test
+        - install-lint-test
         - build
-      jobs:
+        - lighthouse
