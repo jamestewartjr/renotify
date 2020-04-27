@@ -31,8 +31,6 @@ jobs:
   lighthouse:
     docker:
       - image: circleci/node:10-browsers
-    requires:
-      - build
     steps:
       - checkout
       - run: sudo npm install -g @lhci/cli@0.3.x
@@ -42,4 +40,6 @@ workflows:
       jobs:
         - install-lint-test
         - build
-        - lighthouse
+        - lighthouse:
+          requires:
+             - build
