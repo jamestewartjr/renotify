@@ -33,7 +33,7 @@ jobs:
       - image: circleci/node:10-browsers
     steps:
       - checkout
-      - run: sudo npm install -g @lhci/cli@0.3.x
+      - run: npm install -g @lhci/cli@0.3.x
       - run: lhci autorun
 workflows:
     install-and-deploy:
