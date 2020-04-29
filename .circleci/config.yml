@@ -34,12 +34,12 @@ jobs:
     steps:
       - checkout
       - run: sudo npm install -g @lhci/cli@0.3.x
-      - run: lhci autorun 
+      - run: lhci autorun --collect.staticDistDir=./build
 workflows:
     install-and-deploy:
       jobs:
         - install-lint-test
         - build
-        # - lighthouse:
-        #     requires:
-        #       - build
+        - lighthouse:
+            requires:
+              - build
