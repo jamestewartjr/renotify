@@ -69,11 +69,16 @@ const Login = (props) => {
         <Avatar className={classes.avatar}>
           <FaUserLock />
         </Avatar>
-        <Typography component="h1" variant="h5">
+        <Typography
+          className="title"
+          component="h1"
+          variant="h5"
+          data-testid="login-title"
+        >
           Welcome Back!
         </Typography>
         <form 
-          className={loading ? 'loading' : classes.form} 
+          className={loading ? 'Loading...' : classes.form} 
           onSubmit={onSubmit} 
           noValidate 
           data-testid="login-form"
@@ -104,10 +109,6 @@ const Login = (props) => {
             data-testid="login-password"
 
           />
-          {/* <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          /> */}
           {Object.values(errors).map(errors => 
             <FormHelperText key={errors} error={errors.length > 0 ? true : false}>
               <span>{errors}</span>

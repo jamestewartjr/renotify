@@ -35,25 +35,36 @@ const mocks = [
 ]
 
 describe('<Login />', () => {
-  describe('Success', () => {
-    it('should render initial state', () => {
+  describe('Renders', () => {
+    it('should render login title', () => {
       const {queryByTestId} = render(
-        <Router>
-          <MockedProvider mocks={[]}>
+        <MockedProvider mocks={[]}>
+          <Router>
             <Login />
-          </MockedProvider>
-        </Router>
+          </Router>
+        </MockedProvider>
       );
-      expect(queryByTestId('login')).toBeTruthy();
-
+      expect(queryByTestId('login-title')).toHaveTextContent('Welcome Back!');
     });
-    // it('renders the Login component', () => {
-    //   const { queryByTestId } = render(
-    //     <MockedProvider mocks={mocks}>
-    //       <Login />
-    //     </MockedProvider>
-    //   );
-    //   expect(queryByTestId('container')).toBeTruthy();
-    // });
+    it('should render login email label', () => {
+      const {queryByTestId} = render(
+        <MockedProvider mocks={[]}>
+          <Router>
+            <Login />
+          </Router>
+        </MockedProvider>
+      );
+      expect(queryByTestId('login-email')).toHaveTextContent('Email Address');
+    });
+    it('should render login password label', () => {
+      const {queryByTestId} = render(
+        <MockedProvider mocks={[]}>
+          <Router>
+            <Login />
+          </Router>
+        </MockedProvider>
+      );
+      expect(queryByTestId('login-password')).toHaveTextContent('Password');
+    });
   });
 });
