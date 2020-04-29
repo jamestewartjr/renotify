@@ -77,13 +77,13 @@ const Register = (props) => {
   function registerUser(){ addUser()}
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xs" data-testid="register">
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <FaUserLock />
         </Avatar>
-        <Typography component="h1" variant="h5">
+        <Typography component="h1" variant="h5" data-testid="register-title">
           Welcome
         </Typography>
         <form className={loading ? 'loading' : classes.form} onSubmit={onSubmit} noValidate>

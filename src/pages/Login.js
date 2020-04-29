@@ -131,7 +131,12 @@ const Login = (props) => {
               </Link> */}
             </Grid> 
             <Grid item>
-              <Link to="/register" variant="body2">
+              <Link 
+                to="/register"
+                variant="body2"
+                className="register-link"
+                data-testid="login-register-link"
+              >
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>
