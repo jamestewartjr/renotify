@@ -40,7 +40,9 @@ workflows:
     install-and-deploy:
       jobs:
         - install-lint-test
-        - build
+        - build:
+            requires:
+              - install-lint-test
         - lighthouse:
             requires:
               - build
