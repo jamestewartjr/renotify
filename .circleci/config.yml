@@ -34,6 +34,7 @@ jobs:
     steps:
       - checkout
       - run: sudo npm install -g @lhci/cli@0.3.x
+      - run: npm run build
       - run: lhci autorun --collect.staticDistDir=./build
 workflows:
     install-and-deploy:
