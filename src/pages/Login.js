@@ -11,9 +11,9 @@ import {FaUserLock} from 'react-icons/fa';
 import {Link} from 'react-router-dom';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import {useForm} from '../utils/hooks'
-import {useMutation} from '@apollo/react-hooks';
-import gql from 'graphql-tag';
+import { useMutation } from '@apollo/react-hooks';
 import {AuthContext} from '../context/auth'
+import {LOGIN_USER} from '../api/mutations'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -63,7 +63,7 @@ const Login = (props) => {
   function signinUser(){ loginUser()}
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xs" data-testid="login">
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -72,7 +72,12 @@ const Login = (props) => {
         <Typography component="h1" variant="h5">
           Welcome Back!
         </Typography>
-        <form className={loading ? 'loading' : classes.form} onSubmit={onSubmit} noValidate>
+        <form 
+          className={loading ? 'loading' : classes.form} 
+          onSubmit={onSubmit} 
+          noValidate 
+          data-testid="login-form"
+        >
           <TextField
             variant="outlined"
             margin="normal"
@@ -83,6 +88,7 @@ const Login = (props) => {
             name="email"
             autoComplete="email"
             onChange={onChange}
+            data-testid="login-email"
           />
           <TextField
             variant="outlined"
@@ -95,6 +101,8 @@ const Login = (props) => {
             id="password"
             autoComplete="current-password"
             onChange={onChange}
+            data-testid="login-password"
+
           />
           {/* <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -111,6 +119,7 @@ const Login = (props) => {
             variant="contained"
             color="primary"
             className={classes.submit}
+            data-testid="login-submit-action"
           >
             Login
           </Button>
@@ -133,16 +142,3 @@ const Login = (props) => {
 }
 
 export default Login;
-
-
-const LOGIN_USER = gql`
-  mutation login(
-    $email: String!
-    $password: String!
-  ) {
-    login( email: $email  password: $password  )
-    {
-     token user{ id email username createdAt }
-    }
-  }
-`
