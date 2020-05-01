@@ -1,8 +1,9 @@
 version: 2.1
 orbs:
   node: circleci/node@1.1.6
+  cypress: cypress-io/cypress@1
 jobs:
-  install-and-test:
+  install-lint-test:
     executor:
       name: node/default
     steps:
@@ -13,9 +14,12 @@ jobs:
                 name: Install Dependencies
                 command: npm install
             - run:
+                name: Lint Code
+                command: npm run lint
+            - run:
                 name: Test Changes
                 command: npm test
-  build-and-deploy:
+  build:
     executor:
       name: node/default
     steps:
@@ -25,8 +29,27 @@ jobs:
             - run: 
                 name: Build Production
                 command: npm run build
+  lighthouse:
+    docker:
+      - image: circleci/node:10-browsers
+    steps:
+      - checkout
+      - run: sudo npm install -g @lhci/cli@0.3.x
+      - run: npm i
+      - run: npm run build
+      - run: lhci autorun --collect.staticDistDir=./build
 workflows:
     install-and-deploy:
       jobs:
-        - install-and-test
-        - build-and-deploy
+        - install-lint-test
+        - build:
+            requires:
+              - install-lint-test
+        - lighthouse:
+            requires:
+              - build
+        - cypress/run:
+            requires:
+              - build
+            start: npm start
+            wait-on: 'http://localhost:3000'
