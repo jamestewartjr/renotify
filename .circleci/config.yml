@@ -1,6 +1,7 @@
 version: 2.1
 orbs:
   node: circleci/node@1.1.6
+  cypress: cypress-io/cypress@1
 jobs:
   install-lint-test:
     executor:
@@ -47,3 +48,6 @@ workflows:
         - lighthouse:
             requires:
               - build
+        - cypress/run:
+            start: npm start
+            wait-on: 'http://localhost:3000'
