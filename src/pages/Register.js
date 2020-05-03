@@ -15,6 +15,7 @@ import gql from 'graphql-tag';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import {useForm} from '../utils/hooks'
 import {AuthContext} from '../context/auth'
+import ReactGA from 'react-ga';
 
 const Copyright = () => {
   return (
@@ -61,6 +62,10 @@ const Register = (props) => {
   const [addUser, {loading}] = useMutation(REGISTER_USER, {
     update(_, {data: {register: userData}}){
       context.login(userData)
+      ReactGA.event({
+        category: 'Register',
+        action: 'User registered',
+      });
       props.history.push('/notices');
     },
     onError(errors) {

@@ -20,11 +20,10 @@ import AuthRoute from './components/AuthRoute'
 import {Header} from './components/layout/Header'
 import NotFound from './components/NotFound'
 
-
 if (process.env.NODE_ENV !== 'production') {
-  ReactGA.initialize('229806316',  { testMode: true });
+  ReactGA.initialize('UA-229806316-1',  { testMode: true });
 } else {
-  ReactGA.initialize('229806316');
+  ReactGA.initialize('UA-229806316-1');
 }
 
 const history = createBrowserHistory()

@@ -10,6 +10,7 @@ import Container from '@material-ui/core/Container';
 import {FaUserLock} from 'react-icons/fa';
 import {Link} from 'react-router-dom';
 import FormHelperText from '@material-ui/core/FormHelperText';
+import ReactGA from 'react-ga';
 import {useForm} from '../utils/hooks'
 import { useMutation } from '@apollo/react-hooks';
 import {AuthContext} from '../context/auth'
@@ -47,6 +48,10 @@ const Login = (props) => {
   const [loginUser, {loading}] = useMutation(LOGIN_USER, {
     update(_, {data: {login: userData}}){
       context.login(userData)
+      ReactGA.event({
+        category: 'Login',
+        action: 'User signed in',
+      });
       props.history.push('/notices');
     },
     onError(errors) {

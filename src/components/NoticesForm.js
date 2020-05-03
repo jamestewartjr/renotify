@@ -5,6 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 // import FormHelperText from '@material-ui/core/FormHelperText';
+import ReactGA from 'react-ga';
 import {useForm} from '../utils/hooks'
 import {FETCH_USER_NOTICES } from '../api/queries'
 import {CREATE_NOTICE } from '../api/mutations'
@@ -30,6 +31,10 @@ const NoticesForm = (props) => {
       const data = proxy.readQuery({query: FETCH_USER_NOTICES})
       data.fetchNoticesByUsername = [result.data.createNotice, ...data.fetchNoticesByUsername]
       proxy.writeQuery({ query: FETCH_USER_NOTICES , data})
+      ReactGA.event({
+        category: 'Notice Created',
+        action: 'user created new notice',
+      });
       values.body = ''
     },
     onError(error) {
