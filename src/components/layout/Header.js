@@ -13,6 +13,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import {Link} from 'react-router-dom'
 import {AuthContext} from '../../context/auth'
 import Button from '@material-ui/core/Button';
+import ReactGA from 'react-ga';
 import { makeStyles } from '@material-ui/core/styles';
 import {  Redirect } from 'react-router-dom';
 
@@ -32,6 +33,8 @@ export const Header = () => {
   const classes = useStyles();
   const [toggle, setMenuToggle] = useState(false);
   const {user, logout} = useContext(AuthContext)
+
+  ReactGA.set({userId: user})
 
   const toggleDrawer = () => event => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
